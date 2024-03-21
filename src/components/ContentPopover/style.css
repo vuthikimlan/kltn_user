@@ -1,0 +1,10 @@
+
+:where(.css-dev-only-do-not-override-1drr2mu).ant-popover .ant-popover-inner{
+    border-radius: unset;
+    padding: 25px;
+}
+.ant-popover-title{
+    color: #101112;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+}

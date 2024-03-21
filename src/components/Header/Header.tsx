@@ -1,0 +1,57 @@
+"use client";
+import Link from "next/link";
+import BadgeCart from "../Cart/Badge";
+import ButtonLogin from "../Button/Login";
+import ButtonRegister from "../Button/Register";
+import DropdownUser from "../Dropdown/Dropdown";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { isLogin } from "@/store/appSlice";
+import ButtonSearch from "../Button/Search";
+
+function Header() {
+  const token = Cookies.get("token");
+  const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state?.app?.isLogin);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(isLogin(true));
+    } else {
+      dispatch(isLogin(false));
+    }
+  }, [token, dispatch]);
+
+  return (
+    <>
+      <div className="flex justify-center mt-[20px] pb-[7px]  shadow-lg shadow-gray-300 ">
+        <Link href={"/home"} className="uppercase font-semibold mr-[8%] ">
+          e-learning
+        </Link>
+        <div className=" w-[50%] mr-[5%] ">
+          <ButtonSearch />
+        </div>
+        <Link href={""} className=" mr-[15px] mt-[5px] ">
+          Giảng dạy
+        </Link>
+        <BadgeCart />
+        <div className="ml-[50px]">
+          {login ? (
+            <>
+              <DropdownUser />
+            </>
+          ) : (
+            <>
+              <ButtonLogin />
+              <ButtonRegister />
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Header;
