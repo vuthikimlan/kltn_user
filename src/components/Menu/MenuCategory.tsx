@@ -1,50 +1,35 @@
-import { Menu, MenuProps } from "antd";
+"use client";
 
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group"
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
-}
+import { getAllField } from "@/api/field";
+import { Menu, MenuProps, Popover } from "antd";
+import Link from "next/link";
+import { Key, useEffect, useState } from "react";
+import MenuTopic from "./MenuTopic";
 
 function MenuCategory() {
-  const items: MenuProps["items"] = [
-    getItem("Phát triển", 1, null, [
-      getItem("Phát triển web", "sub1"),
-      getItem("Khoa học dữ liệu", "sub2"),
-      getItem("Ngôn ngữ lập trình", "sub3"),
-    ]),
-    getItem("Kinh doanh", 2, null, [
-      getItem("Giao tiếp", "sub4"),
-      getItem("Bán hàng", "sub4"),
-      getItem("Chiến lược kinh doanh", "sub5"),
-    ]),
-    getItem("Tài chính & kế toán", 3, null, [
-      getItem("Phát triển web", "sub1"),
-      getItem("Khoa học dữ liệu", "sub2"),
-      getItem("Ngôn ngữ lập trình", "sub3"),
-    ]),
-    getItem("Thiết kế", 4, null, [
-      getItem("Thiết kế web", "sub1"),
-      getItem("Thiết kế trò chơi", "sub2"),
-      getItem("Thiết kế thời trang", "sub3"),
-    ]),
-  ];
+  const [field, setField] = useState();
+
+  useEffect(() => {
+    getAllField().then((res) => {
+      setField(res?.data?.items);
+    });
+  }, []);
 
   return (
-    <div className=" border-t-[1px] border-solid border-[#d1d7dc] shadow-md ">
-      <Menu mode="horizontal" items={items} className="justify-center" />
+    <div className=" border-t-[1px] border-solid border-[#d1d7dc] shadow-md flex justify-center ">
+      {(field as any)?.map((el: any, ind: Key) => {
+        return (
+          <div key={ind} className="m-[13px] ">
+            <Popover
+              content={<MenuTopic dataTopic={el?.topics} slugField={el.slug} />}
+            >
+              <Link href={`courses/${el.slug}`}>
+                <p>{el?.title} </p>
+              </Link>
+            </Popover>
+          </div>
+        );
+      })}
     </div>
   );
 }

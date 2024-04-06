@@ -1,0 +1,10 @@
+:where(.css-dev-only-do-not-override-1drr2mu).ant-btn-primary {
+    color: #fff;
+    background: #fff;
+    box-shadow: none;
+}
+
+:where(.css-dev-only-do-not-override-1drr2mu).ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+    color: #fff;
+    background: #fff;;
+}

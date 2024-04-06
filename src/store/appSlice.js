@@ -5,7 +5,10 @@ export const appSlice =  createSlice({
     name: 'app',
     initialState: {
         isLogin: false,
-        openModal: false
+        openModal: false,
+        countCourseCart: 0,
+        searchData: {},
+        inforOrder: {}
     }, 
     reducers: {
         isLogin: (state, actions) => {
@@ -16,10 +19,23 @@ export const appSlice =  createSlice({
         },
         modalClose: (state) => {
             state.openModal = false
-        }
+        },
+        countCart: (state, actions) => {
+            state.countCourseCart = actions.payload
+        },
+        searchData: (state, action) => {
+            state.searchData = action.payload
+        },
+        inforOrder: (state, action) => {
+            state.inforOrder = action.payload
+        },
     }
 })
 
-export const {isLogin, modalOpen, modalClose } = appSlice.actions
+export const {
+    isLogin, modalOpen, 
+    modalClose, countCart, 
+    searchData, inforOrder,
+} = appSlice.actions
 
 export default appSlice.reducer

@@ -1,23 +1,27 @@
-import Link from "next/link";
-import { dataCourse } from "../DataDemo";
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-interface Datatype {
-  name: string | null | undefined;
-  image: string | undefined;
-  author: string | null | undefined;
-  price: number | null | undefined;
-}
+import Link from "next/link";
+import { Key, useEffect, useState } from "react";
+import { getAllCourse } from "@/api/course";
 
 function MyCourses() {
+  const [myCourse, setMyCourse] = useState([]);
   let slug = "";
+  useEffect(() => {
+    getAllCourse().then((res) => {
+      setMyCourse(res?.data?.items.slice(0, 4));
+    });
+  }, []);
+
   return (
     <>
       <div className="mx-[10%] ">
-        {dataCourse.map((items: Datatype, ind: any) => {
+        {myCourse.map((items: any, ind: Key) => {
           return (
             <div key={ind}>
               <Link
-                href={`/my-course/${slug}`}
+                href={`/my-course/${items?.slug}`}
                 className=" hover:cursor-pointer mt-[10%] mx-auto"
               >
                 <div className="border-b-[1px] border-solid border-[#e4e8eb] mt-[10px] w-[63rem] ">
@@ -28,21 +32,22 @@ function MyCourses() {
                       className=" w-[240px] h-[135px] "
                     />
                     <div className=" ">
-                      <p className="font-semibold">{items.name} </p>
-                      <p className="w-[40rem] sm ">
-                        Become a Full-Stack Web Developer with just ONE course.
-                        HTML, CSS, Javascript, Node, React, PostgreSQL, Web3 and
-                        DApps
-                      </p>
-                      <span className="text-xs ">Bởi {items.author}</span>
+                      <p className="font-semibold">{items?.name} </p>
+                      <p className="w-[40rem] sm ">{items.description}</p>
+                      <span className="text-xs ">
+                        Bởi {items?.createdBy?.name}
+                      </span>
                       <div className="flex text-xs my-[5px] ">
-                        <p>4,9 sao</p>
-                        <p className="ml-[10px] ">(1) </p>
+                        <p>{items.totalRatings} sao </p>
+                        <p className="ml-[10px] ">({items?.userRatings}) </p>
                       </div>
                       <ul className="flex list-disc text-xs ">
                         <li className="ml-[15px] "> Tổng số 28 giờ </li>
-                        <li className="ml-[20px] "> 191 bài giảng </li>
-                        <li className="ml-[20px] ">Trình độ</li>
+                        <li className="ml-[20px] ">
+                          {" "}
+                          {items?.totalLecture} bài giảng{" "}
+                        </li>
+                        <li className="ml-[20px] ">{items?.level}</li>
                       </ul>
                     </div>
                   </div>

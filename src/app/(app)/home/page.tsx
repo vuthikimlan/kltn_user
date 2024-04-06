@@ -9,8 +9,6 @@ function Home() {
       <div className="mx-[10%]">
         <Banner />
         <TopCourse />
-        <TopCourse />
-        <TopCourse />
       </div>
     </>
   );

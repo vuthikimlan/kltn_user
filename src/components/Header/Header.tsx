@@ -12,7 +12,7 @@ import { isLogin } from "@/store/appSlice";
 import ButtonSearch from "../Button/Search";
 
 function Header() {
-  const token = Cookies.get("token");
+  const token = Cookies.get("jwt");
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state?.app?.isLogin);
 
@@ -27,15 +27,29 @@ function Header() {
   return (
     <>
       <div className="flex justify-center mt-[20px] pb-[7px]  shadow-lg shadow-gray-300 ">
-        <Link href={"/home"} className="uppercase font-semibold mr-[8%] ">
-          e-learning
-        </Link>
+        {login ? (
+          <>
+            <Link href={"/home"} className="uppercase font-semibold mr-[8%] ">
+              e-learning
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href={"/"} className="uppercase font-semibold mr-[8%] ">
+              e-learning
+            </Link>
+          </>
+        )}
         <div className=" w-[50%] mr-[5%] ">
           <ButtonSearch />
         </div>
-        <Link href={""} className=" mr-[15px] mt-[5px] ">
+        <Link href={"/blog"} className=" mr-[15px] mt-[5px] ">
+          Blog
+        </Link>
+        <Link href={"http://localhost:3001/"} className=" mr-[15px] mt-[5px] ">
           Giảng dạy
         </Link>
+
         <BadgeCart />
         <div className="ml-[50px]">
           {login ? (

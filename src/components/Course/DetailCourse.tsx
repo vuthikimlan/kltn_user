@@ -3,19 +3,32 @@
 import CommentCourse from "../Comment/Comment";
 import CollapseCourse from "./Collapse/Collapse";
 import ButtonAddCart from "../Button/AddCart";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getCourseBySlug } from "@/api/course";
+import { CheckOutlined } from "@ant-design/icons";
 
 function DetaileCourse() {
+  const [course, setCourse] = useState({});
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
+
+  useEffect(() => {
+    getCourseBySlug(slug).then((res) => {
+      setCourse(res?.data);
+    });
+  }, [slug]);
+
+  const data = course as any;
+
   return (
     <>
       <div className="bg-[#2d2f31] text-[#fff] py-[32px] relative ">
         <div className="banner w-[50%] m-[auto]">
           <h1 className=" text-3xl font-bold w-[65%] mb-[16px]  ">
-            Viết ứng dụng bán hàng với Java Springboot/API và Angular
+            {data?.name}
           </h1>
-          <p className="mb-[24px] font-sans ">
-            Thực chiến, xây dựng ứng dụng bán hàng với Java Springboot API và
-            Angular
-          </p>
+          <p className="mb-[24px] font-sans ">{data?.description}</p>
           <div className="font-sans text-sm">
             <span className="mr-[10px] font-sans ">Số sao</span>
             <span className="mr-[10px] font-sans ">149 xếp hạng</span>{" "}
@@ -23,7 +36,7 @@ function DetaileCourse() {
             <span className="mr-[10px] font-sans ">500 học viên</span>{" "}
             {/* Tính tổng số lượng các học viên của khóa học */}
             <br />
-            <p className="font-sans mt-[10px] ">Được tạo bởi Nguyễn văn a</p>
+            <p className="font-sans mt-[10px] ">{`Được tạo bởi ${data?.createdBy?.name} `}</p>
             {/* Có thể link đến phần giới thiệu của tác giả */}
           </div>
         </div>
@@ -35,10 +48,20 @@ function DetaileCourse() {
       </div>
       <div className="w-[50%] m-[auto] ">
         <div className="pt-[24px] mb-[32px]  ">
-          <div className=" border-[1px] border-solid pt-[24px] pb-[26px]">
-            <h1 className="ml-[24px] text-xl font-semibold ">
+          <div className=" border-[1px] border-solid pt-[24px] pb-[26px] px-[10px] ">
+            <h1 className="ml-[24px] text-xl font-semibold  mb-[10px]  ">
               Nội dung bài học
             </h1>
+            <ul className=" grid-cols-2 grid gap-2 ">
+              {data?.lessonContent?.map((el: any, ind: any) => {
+                return (
+                  <div key={ind} className="flex items-baseline ">
+                    <CheckOutlined className="mt-[6px] " />
+                    <li className="ml-[10px] mb-[5px] text-sm ">{el} </li>
+                  </div>
+                );
+              })}
+            </ul>
           </div>
         </div>
         <div className=" mb-[20px] ">
@@ -46,15 +69,19 @@ function DetaileCourse() {
             <h1 className=" text-xl font-semibold mb-[16px] ">
               Nội dung khóa học
             </h1>
-            <CollapseCourse />
+            <CollapseCourse data={data?.parts} />
           </div>
           <div className="mb-[25px] requestCourse ">
             {/* Lấy dữ liệu từ điều kiện tham gia */}
             <h1 className=" text-xl font-semibold mb-[16px] ">Yêu cầu</h1>
             <ul className="list-disc ml-[20px] ">
-              <li>Có tư duy lập trình</li>
-              <li>Có hiểu biết về lập trình website</li>
-              <li>Có kiến thức về html, css cơ bản</li>
+              {data?.conditionParticipate?.map((el: any, ind: any) => {
+                return (
+                  <div key={ind} className="flex items-baseline ">
+                    <li className="ml-[10px] mb-[5px] ">{el} </li>
+                  </div>
+                );
+              })}
             </ul>
           </div>
           <div className="mb-[25px] descriptionCourse ">
@@ -85,18 +112,21 @@ function DetaileCourse() {
               {" "}
               Đối tượng của khóa học này:{" "}
             </h1>
-
             <ul className="list-disc ml-[20px] ">
-              <li>Tất cả những bạn mới bắt đầu</li>
-              <li>Những bạn muốn học lập trình với React</li>
-              <li>Muốn học và làm chủ React</li>
+              {data?.object?.map((el: any, ind: any) => {
+                return (
+                  <div key={ind} className="flex items-baseline ">
+                    <li className="ml-[10px] mb-[5px] ">{el} </li>
+                  </div>
+                );
+              })}
             </ul>
           </div>
           <div className="w-[35%] m-[auto] ">
-            <ButtonAddCart />
+            <ButtonAddCart courseId={data?._id} />
           </div>
         </div>
-        <CommentCourse />
+        <CommentCourse data={data?.ratings} totalRating={data?.totalRatings} />
       </div>
     </>
   );

@@ -1,23 +1,32 @@
-"use client";
 import Link from "next/link";
-import { dataCourseField } from "../DataDemo";
-import CarouselCourse from "./Carousel";
+import { getAllField } from "@/api/field";
+import { Key } from "react";
+import TopCourseByField from "./Field/TopCourseByField";
 
-function TopCourse() {
+async function TopCourse() {
+  const res = await getAllField();
+  let field = [];
+  if (res) {
+    field = res?.data?.items;
+  }
+
   return (
-    <div className="mt-[5%] ">
-      <h1 className=" mb-[20px] text-3xl text-[#2d2f31] font-semibold ">
-        Các khóa học hàng đầu về{" "}
-        <Link
-          href={""}
-          className=" border-b-[1px] border-solid text-[#8072e6] border-[#8072e6] "
-        >
-          Phát triển web
-          {/* Thay thế bằng tên thể loại */}
-        </Link>{" "}
-      </h1>
-      <CarouselCourse dataCourse={dataCourseField} />
-    </div>
+    <>
+      {field?.map((items: any, ind: Key) => (
+        <div className="mt-[5%] " key={ind}>
+          <h1 className=" mb-[20px] text-3xl text-[#2d2f31] font-semibold ">
+            Các khóa học hàng đầu về{" "}
+            <Link
+              href={`courses/${items.slug}`}
+              className=" border-b-[1px] border-solid text-[#8072e6] border-[#8072e6] "
+            >
+              {items?.title}
+            </Link>{" "}
+          </h1>
+          <TopCourseByField slug={items.slug} />
+        </div>
+      ))}
+    </>
   );
 }
 

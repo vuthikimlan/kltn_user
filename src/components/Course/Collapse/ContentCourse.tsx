@@ -1,223 +1,93 @@
 import { CopyOutlined, YoutubeOutlined } from "@ant-design/icons";
 import { Collapse, CollapseProps } from "antd";
+import { Key, useState } from "react";
 
-function ContentCourse() {
-  const items: CollapseProps["items"] = [
-    {
-      key: "1",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "2",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
+type ItemType = any;
 
-    {
-      key: "3",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
+function ContentCourse({ data }: any) {
+  const parts = data?.parts;
+  const [video, setVideo] = useState("");
+
+  const genExtra = (count: any) => {
+    return (
+      <>
+        <div className="text-sm">
+          <ul className="flex list-disc ">
+            <li className="mr-[25px]  "> {count} bài giảng</li>
+            <li> 17 phút </li>
+          </ul>
         </div>
-      ),
-    },
-    {
-      key: "4",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
+      </>
+    );
+  };
+
+  const handleGetSrcVideo = (src: string) => {
+    setVideo(src);
+  };
+
+  const itemsLecture = (items: any): ItemType[] | undefined => {
+    const result = items?.map((item: any, ids: any) => {
+      const i = String(ids + 1);
+      const count = item.lectures.length;
+      return {
+        key: item?._id,
+        label: `Phần ${i}: ${item?.partName} `,
+        children: (
+          <div key={ids}>
+            {item?.lectures?.map((el: any, ind: Key) => {
+              return (
+                <div key={ind}>
+                  <div className="flex justify-between">
+                    <div
+                      className="flex"
+                      onClick={() => handleGetSrcVideo(el?.video)}
+                    >
+                      <YoutubeOutlined className="mr-[8px]" />
+                      {el?.lectureName}
+                    </div>
+                    <span>16:46</span>
+                  </div>
+                  {el?.document && (
+                    <div className="flex justify-between">
+                      <div className="flex ">
+                        <CopyOutlined className="mr-[8px]" />
+                        {/* Nếu là tài liệu thì hiển thị icon này */}
+                        <p> {el?.lectureName}</p>
+                      </div>
+                      <span>00:08</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "5",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "6",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "7",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "8",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-    {
-      key: "9",
-      label: "Tên phần",
-      children: (
-        <div className="snap-start">
-          <div className="flex justify-between">
-            <div className="flex  ">
-              <YoutubeOutlined className="mr-[8px]" />
-              {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
-            </div>
-            <span>16:46</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex ">
-              <CopyOutlined className="mr-[8px]" />
-              {/* Nếu là tài liệu thì hiển thị icon này */}
-              <p> Tên bài giảng</p>
-            </div>
-            <span>00:08</span>
-          </div>
-        </div>
-      ),
-    },
-  ];
+        ),
+        extra: genExtra(count),
+      };
+    });
+    return result;
+  };
   return (
-    <div className=" snap-y snap-mandatory ">
-      <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[18.3rem] ">
-        Nội dung khóa học
-      </h1>
+    <div className="flex ">
+      <div>
+        <iframe
+          width="1100"
+          height="480"
+          src={video}
+          // src="https://firebasestorage.googleapis.com/v0/b/nodejs-b9313.appspot.com/o/Demo_NodeJS%2F%E3%80%90Vietsub%2BLyrics%E3%80%91%20Until%20I%20Found%20You%20(Juliet%20to%20your%20Romeo)%20-%20Stephen%20Sanchez%20ft.%20Em%20Beihold.mp4?alt=media&token=e6c32857-d991-4dab-aa0f-5a9ed7be372d"
+          frameBorder="0"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          // autoplay;
+          allowFullScreen
+        ></iframe>
+      </div>
+      <div className=" snap-y snap-mandatory ">
+        <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[18.3rem] ">
+          Nội dung khóa học
+        </h1>
 
-      <Collapse items={items} className=" " />
+        <Collapse items={itemsLecture(parts)} className="rounded-none " />
+      </div>
     </div>
   );
 }

@@ -5,8 +5,7 @@ import { Avatar, Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
 import { isLogin } from "@/store/appSlice";
 import Link from "next/link";
 
@@ -21,11 +20,11 @@ function DropdownUser() {
     },
     {
       key: "2",
-      label: "Hồ sơ",
+      label: <Link href={"/user"}>Hồ sơ</Link>,
     },
     {
       key: "3",
-      label: "Giỏ hàng của tôi",
+      label: <Link href={"/cart"}>Giỏ hàng của tôi</Link>,
     },
     {
       key: "4",
@@ -33,7 +32,7 @@ function DropdownUser() {
       onClick: () => {
         route.replace("/");
         dispatch(isLogin(false));
-        Cookies.remove("token");
+        Cookies.remove("jwt");
       },
     },
   ];

@@ -7,9 +7,8 @@ import ButtonForgetPass from "../Button/ForgetPassword";
 import { login } from "@/api/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { isLogin } from "@/store/appSlice";
-import { RootState } from "@/store/store";
 
 interface DataType {
   username: string;
@@ -20,16 +19,13 @@ function FormLogin() {
   const route = useRouter();
   const dispatch = useDispatch();
 
-  const Login = useSelector((state: RootState) => state?.app?.isLogin);
-  console.log("Login", Login);
-
   const onFinish = (values: DataType) => {
     login(values).then((res) => {
       if (res?.data?.success === true) {
         dispatch(isLogin(true));
         const checkRole = res?.data?.data?.role;
         if (checkRole === "STUDENT") {
-          Cookies.set("token", res?.data?.data?.token);
+          Cookies.set("jwt", res?.data?.data?.token);
           message.success("Đăng nhập thành công");
           route.push("/home");
         }
@@ -81,11 +77,11 @@ function FormLogin() {
           <Button
             type="primary"
             htmlType="submit"
-            className=" bg-[#fff] border-[#4096ff] text-[#4096ff] text-xl rounded-none text-white font-semibold w-[74%] "
+            className=" bg-[#fff] border-[#4096ff] text-[#4096ff] text-xl rounded-none text-white font-semibold w-[100%] "
           >
             Đăng nhập
           </Button>
-          <div className="mt-[10px] text-[#4096ff] w-[50%] mx-[auto]  ">
+          <div className="mt-[10px] text-[#4096ff] w-[29%] mx-[auto]  ">
             <ButtonForgetPass />
           </div>
         </Form.Item>

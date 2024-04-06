@@ -1,25 +1,22 @@
 import { Avatar } from "antd";
 
-function IntroduceCourse() {
+function IntroduceCourse({ course }: any) {
   return (
     <>
       <div>
         <h1 className="text-[#2d2f31] text-2xl font-semibold mt-[15px] ">
           Giới thiệu khóa học
         </h1>
-        <p className=" mt-[16px] mb-[32px]">
-          Hướng dẫn chính thức về cách lập kế hoạch, sản xuất và xuất bản khóa
-          học online chất lượng cao
-        </p>
+        <p className=" mt-[16px] mb-[32px]">{course?.description}</p>
         {/* Lấy phần mô tả của khóa học */}
         <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex justify-between p-[20px] ">
           <p>Theo số liệu</p>
           <div>
-            <p>Trình độ</p>
+            <p>{course?.level}</p>
             <p>Học viên: 300</p>
           </div>
           <div>
-            <p>Bài giảng: 32</p>
+            <p>Bài giảng: {course?.totalLecture}</p>
             <p>Video: 1.5 giờ</p>
           </div>
         </div>
@@ -71,8 +68,7 @@ function IntroduceCourse() {
           <div>
             <Avatar></Avatar>
             <div>
-              <p>Tên giảng viên</p>
-              <p>Học viên: 300</p>
+              <p>{course?.createdBy?.name}</p>
             </div>
             <div></div>
           </div>
