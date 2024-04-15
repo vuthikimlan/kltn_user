@@ -6,8 +6,6 @@ import teacher from "../../../public/becometeacher.jpg";
 import Image from "next/image";
 import BecomeTeacher from "@/components/Button/BecomeTeacher";
 
-import Payment from "@/components/Payment/Payment";
-
 export default function Home() {
   return (
     <div className="mx-[10%]">

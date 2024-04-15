@@ -1,3 +1,9 @@
 :where(.css-dev-only-do-not-override-1drr2mu).ant-btn {
     color: #fff;
 }
+
+:where(.css-dev-only-do-not-override-1drr2mu).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover{
+    color: #fff;
+    border-color: #3e4143;
+    background: #3e4143;
+}
