@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 function BadgeCart() {
   const count = useSelector((state: RootState) => state?.app?.countCourseCart);
+
   return (
     <>
       <Link href={"/cart"}>

@@ -10,7 +10,8 @@ export const getAllCourse = async (params) => {
 };
 
 export const getCourseBySlug = async (slug) => {
-  const response = await fetch(`http://localhost:8000/course/${slug}`); 
+  console.log('slug', slug);
+  const response = await fetch(`http://localhost:8000/course/detail/${slug}`); 
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }

@@ -6,7 +6,7 @@ function ButtonForgetPass() {
   return (
     <>
       <Link
-        href="/"
+        href="/user/forget-password"
         className=" pt-[20px] text-base border-b-[1px] border-[#4096ff]  "
       >
         Quên mật khẩu

@@ -1,5 +1,5 @@
 export const getAllField = async (params) => {
-    const response = await fetch('http://localhost:8000/field/getAll'); 
+    const response = await fetch('http://localhost:8000/field/getAll', { next: { revalidate: 3600 } }); 
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

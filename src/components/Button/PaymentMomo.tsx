@@ -1,19 +1,29 @@
-import Link from "next/link";
 import momo from "../../../public/logo-momo.webp";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { paymentWithMOMO } from "@/api/user";
 
-function PaymentWithMomo() {
+function PaymentWithMOMO({ amount, orderId }: any) {
+  const route = useRouter();
+  const onFinish = () => {
+    paymentWithMOMO({
+      amount: amount,
+      orderId: orderId,
+    }).then((res) => {
+      const newUrl = res?.data?.payUrl;
+      if (newUrl) {
+        route.push(newUrl);
+      }
+    });
+  };
+
   return (
     <>
-      <Link href={""}>
-        <Image
-          src={momo}
-          alt=""
-          className="w-[100px] h-[100px] ml-[30px] my-[10px] "
-        />
-      </Link>
+      <div onClick={onFinish} className=" cursor-pointer">
+        <Image src={momo} alt="" className="w-[100px] h-[100px] m-[10px] " />
+      </div>
     </>
   );
 }
 
-export default PaymentWithMomo;
+export default PaymentWithMOMO;

@@ -9,6 +9,7 @@ import "./style.css";
 import { getCart } from "@/api/user";
 import { Key, useEffect, useState } from "react";
 import ButtonPayment from "../Button/Payment";
+import DeleteCart from "../Button/DeleteCart";
 
 function MyCart() {
   const [count, setCount] = useState();
@@ -24,20 +25,15 @@ function MyCart() {
     handleGetCart();
   }, []);
 
-  // if (!Object.keys(data).length) {
-  //   return (
-  //     <div>
-  //       <Skeleton active />
-  //     </div>
-  //   );
-  // }
-
   const handleTotalPrice = (cart: any) => {
-    let totalPrice = 0;
-    cart?.forEach((el: any) => {
-      totalPrice += el?.courseId?.price * el?.quantity;
-    });
-    return totalPrice;
+    const total = cart.reduce((total: any, course: any) => {
+      const price = course?.courseId?.discountedPrice
+        ? course?.courseId?.discountedPrice
+        : course?.courseId?.price;
+      return total + price;
+    }, 0);
+
+    return total;
   };
 
   return (
@@ -95,8 +91,31 @@ function MyCart() {
                           <li className="ml-[20px] ">{el?.courseId?.level}</li>
                         </ul>
                       </div>
-                      <Button type="link">Xóa</Button>
-                      <p className="mt-[12px]">{el?.courseId?.price} VND</p>
+                      <DeleteCart
+                        courseId={el?.courseId?._id}
+                        handleGetCart={handleGetCart}
+                      />
+                      {el?.courseId?.discountedPrice > 0 ? (
+                        <>
+                          <div>
+                            <p className="font-medium text-base ">
+                              {(el?.courseId?.discountedPrice).toLocaleString(
+                                "en"
+                              )}{" "}
+                              VND
+                            </p>
+                            <p className="font-normal text-base text-[#6a6f73] line-through ">
+                              {(el?.courseId?.price).toLocaleString("en")} VND
+                            </p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <p className="mt-[12px]">
+                            {(el?.courseId?.price).toLocaleString("en")} VND
+                          </p>
+                        </>
+                      )}
                     </div>
                   </div>
                 );
@@ -106,7 +125,7 @@ function MyCart() {
               <div className="ml-[10%] pb-[20px] ">
                 <p className="text-[#6a6f73] font-medium ">Tổng: </p>
                 <p className="mb-[10px] text-2xl font-semibold ">
-                  {handleTotalPrice(data)} VND
+                  {handleTotalPrice(data).toLocaleString("en")} VND
                 </p>
                 <ButtonPayment />
               </div>

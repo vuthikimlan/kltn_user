@@ -15,10 +15,11 @@ function ButtonAddCart({ courseId }: any) {
     addCart(courseId).then((res) => {
       if (res.status === 200) {
         const count = res?.data?.data?.countCourse;
+        Cookies.set("cartCount", count);
+        dispatch(countCart(count));
         notification.success({
           message: "Thêm khóa học vào giỏ hàng thành công",
         });
-        dispatch(countCart(count));
       } else if (res.status === 201) {
         notification.success({
           message: "Khóa học đã tồn tại trong giỏ hàng",

@@ -28,11 +28,16 @@ function DropdownUser() {
     },
     {
       key: "4",
+      label: <Link href={"/purchase-history"}>Lịch sử mua</Link>,
+    },
+    {
+      key: "5",
       label: "Đăng xuất",
       onClick: () => {
         route.replace("/");
         dispatch(isLogin(false));
         Cookies.remove("jwt");
+        Cookies.remove("cartCount");
       },
     },
   ];

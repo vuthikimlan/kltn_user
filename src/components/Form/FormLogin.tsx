@@ -8,7 +8,7 @@ import { login } from "@/api/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
-import { isLogin } from "@/store/appSlice";
+import { countCart, isLogin } from "@/store/appSlice";
 
 interface DataType {
   username: string;
@@ -26,6 +26,7 @@ function FormLogin() {
         const checkRole = res?.data?.data?.role;
         if (checkRole === "STUDENT") {
           Cookies.set("jwt", res?.data?.data?.token);
+          dispatch(countCart(res?.data?.data?.countCourseCart));
           message.success("Đăng nhập thành công");
           route.push("/home");
         }

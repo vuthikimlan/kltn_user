@@ -6,14 +6,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 function ProfileUser() {
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
   const handleGetProfile = () => {
     getProfileUser().then((res) => {
       setData(res?.data?.data);
     });
   };
-  const user = data as any;
-
   useEffect(() => {
     handleGetProfile();
   }, []);
@@ -26,7 +24,7 @@ function ProfileUser() {
           <div className="  m-[auto] bg-white border-2 border-solid border-[#808080/40]">
             <div className="grid gap-12 tablet:grid-cols-3  phone:grid-cols-1 flex-row items-center justify-evenly mx-[10rem] my-[10px] ">
               <Image
-                src={user?.avatar}
+                src={data?.avatar}
                 alt="avatar"
                 height={150}
                 width={150}
@@ -37,36 +35,36 @@ function ProfileUser() {
               <div className="mb-[1rem] ">
                 <p className="mx-[4rem]">Họ và tên: </p>
                 <p className="border-solid border-[1px]  border-neutral-600 px-[2rem] py-[1rem] mt-[1rem] mx-[4rem] ">
-                  {user?.name}
+                  {data?.name}
                 </p>
               </div>
               <div className="mb-[1rem]">
                 <p className="mx-[4rem]">Tên tài khoản: </p>
                 <p className="border-solid border-[1px]  border-neutral-600 px-[2rem] py-[1rem] mt-[1rem] mx-[4rem] ">
-                  {user?.username}
+                  {data?.username}
                 </p>
               </div>
               <div className="mb-[1rem]">
                 <p className="mx-[4rem]">Email: </p>
                 <p className="border-solid border-[1px]  border-neutral-600 px-[2rem] py-[1rem] mt-[1rem] mx-[4rem] ">
-                  {user?.email}
+                  {data?.email}
                 </p>
               </div>
               <div className="mb-[1rem]">
                 <p className="mx-[4rem]">Số điện thoại: </p>
                 <p className="border-solid border-[1px]  border-neutral-600 px-[2rem] py-[1rem] mt-[1rem] mx-[4rem] ">
-                  {user?.phone}
+                  {data?.phone}
                 </p>
               </div>
             </div>
-            {/* <div className="flex justify-end m-[10rem]  ">
-                <Link
-                  className="bg-[#FB9400] hover:opacity-80 px-[5rem] border-solid	 text-white py-[6px] "
-                  href="/user/edit-profile"
-                >
-                  Chỉnh sửa
-                </Link>
-              </div> */}
+            <div className="flex justify-end mb-[10px] mr-[4rem]  ">
+              <Link
+                className="border-black bg-black border-solid hover:bg-[#3e4143] hover:border-[#3e4143] px-[5rem] text-white py-[6px] "
+                href="/user/edit-profile"
+              >
+                Chỉnh sửa
+              </Link>
+            </div>
           </div>
         </div>
       </div>

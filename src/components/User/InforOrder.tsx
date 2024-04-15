@@ -3,17 +3,17 @@
 
 import { getOrder } from "@/api/user";
 import { RootState } from "@/store/store";
-import { Button, Skeleton } from "antd";
+import { Skeleton } from "antd";
 import { Key, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PaymentWithVNPAY from "../Button/PaymentVNPAY";
-import PaymentWithMomo from "../Button/PaymentMomo";
+import PaymentWithMOMO from "../Button/PaymentMomo";
 import CancelPayment from "../Button/CancelPayment";
 
 function InforOrder() {
   const inforOrder = useSelector((state: RootState) => state.app.inforOrder);
   const orderId = (inforOrder as any)?._id;
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState<any>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function InforOrder() {
   // console.log("orderId", orderId);
   // console.log("order", orderId);
 
-  const course = (order as any)?.courses;
+  const course = order?.courses;
 
   return (
     <div className=" py-[40px] w-[70%] mx-[auto] flex ">
@@ -60,14 +60,28 @@ function InforOrder() {
                     />
                     <p className="ml-[10px]">{el?.name} </p>
                   </div>
-                  <p>₫ {el?.price} </p>
+                  {el.discountedPrice > 0 ? (
+                    <>
+                      <div className=" flex">
+                        <p className="font-medium text-base ">
+                          ₫ {el.discountedPrice.toLocaleString("en")}{" "}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-medium text-base ">
+                        ₫ {el.price.toLocaleString("en")}{" "}
+                      </p>
+                    </>
+                  )}
                 </div>
               );
             })}
           </div>
           <div className="flex justify-between">
             <p>Tổng: </p>
-            <p>₫{(order as any)?.totalPrice} </p>
+            <p>₫{(order?.totalPrice).toLocaleString("en")} </p>
           </div>
         </div>
       </div>
@@ -76,11 +90,8 @@ function InforOrder() {
           Phương thức thanh toán
         </h1>
         <div className="flex ">
-          <PaymentWithVNPAY
-            amount={(order as any)?.totalPrice}
-            orderId={orderId}
-          />
-          <PaymentWithMomo />
+          <PaymentWithVNPAY amount={order?.totalPrice} orderId={orderId} />
+          <PaymentWithMOMO amount={order?.totalPrice} orderId={orderId} />
         </div>
         <div className=" relative top-[2rem] left-[8rem] ">
           <CancelPayment orderId={orderId} />

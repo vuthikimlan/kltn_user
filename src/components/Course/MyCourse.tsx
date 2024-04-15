@@ -3,14 +3,14 @@
 
 import Link from "next/link";
 import { Key, useEffect, useState } from "react";
-import { getAllCourse } from "@/api/course";
+import { getProfileUser } from "@/api/user";
 
 function MyCourses() {
   const [myCourse, setMyCourse] = useState([]);
-  let slug = "";
+
   useEffect(() => {
-    getAllCourse().then((res) => {
-      setMyCourse(res?.data?.items.slice(0, 4));
+    getProfileUser().then((res) => {
+      setMyCourse(res?.data?.data?.boughtCourses);
     });
   }, []);
 

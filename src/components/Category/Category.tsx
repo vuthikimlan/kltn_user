@@ -1,31 +1,19 @@
-"use client";
+// "use client";
 
 import Link from "next/link";
 import { getAllField } from "../../api/field";
 import { Key, useEffect, useState } from "react";
 
-type DataType = {
-  image: string | undefined;
-  title: string;
-  slug: string;
-};
-
-function Category() {
-  const [field, setField] = useState([]);
-  useEffect(() => {
-    getAllField().then((res) => {
-      setField(res?.data?.items);
-    });
-  }, []);
-  // const res =  getAllField();
-  // let data = [];
-  // if (res) {
-  //   data = res?.data?.items;
-  // }
+async function Category() {
+  const res = await getAllField();
+  let field = [];
+  if (res) {
+    field = res?.data?.items;
+  }
 
   return (
     <div className="grid-cols-4 grid gap-x-8 gap-y-4 ">
-      {field.map((item: DataType, ind: Key) => (
+      {field.map((item: any, ind: Key) => (
         <div key={ind}>
           <Link href={`courses/${item.slug}`}>
             <div className=" cursor-pointer  ">

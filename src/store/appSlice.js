@@ -1,14 +1,18 @@
 "use client";
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from 'js-cookie';
+
+const initialCount =Cookies.get('cartCount') || 0;
 
 export const appSlice =  createSlice({
     name: 'app',
     initialState: {
         isLogin: false,
         openModal: false,
-        countCourseCart: 0,
+        countCourseCart: initialCount,
         searchData: {},
-        inforOrder: {}
+        inforOrder: {},
+        inforUser: {}
     }, 
     reducers: {
         isLogin: (state, actions) => {
@@ -29,6 +33,9 @@ export const appSlice =  createSlice({
         inforOrder: (state, action) => {
             state.inforOrder = action.payload
         },
+        profileUser: (state, action) => {
+            state.inforUser = action.payload
+        }
     }
 })
 
@@ -36,6 +43,7 @@ export const {
     isLogin, modalOpen, 
     modalClose, countCart, 
     searchData, inforOrder,
+    profileUser,
 } = appSlice.actions
 
 export default appSlice.reducer

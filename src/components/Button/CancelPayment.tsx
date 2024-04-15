@@ -1,4 +1,4 @@
-import { deleteOrder } from "@/api/user";
+import { deleteOrder, updateOrder } from "@/api/user";
 import { countCart } from "@/store/appSlice";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Button, Modal, notification } from "antd";
@@ -18,8 +18,8 @@ function CancelPayment({ orderId }: any) {
     });
   };
 
-  const handleDelete = () => {
-    deleteOrder(orderId).then((res) => {
+  const handleCancelOrder = () => {
+    updateOrder(orderId, { status: "cancelled" }).then((res) => {
       if (res.status === 200) {
         route.replace("/home");
         openNotification();
@@ -37,7 +37,7 @@ function CancelPayment({ orderId }: any) {
       okType: "danger",
       cancelText: "Hủy",
       onOk() {
-        handleDelete();
+        handleCancelOrder();
       },
       onCancel() {
         console.log("Cancel");

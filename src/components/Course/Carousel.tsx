@@ -46,9 +46,24 @@ function CarouselCourse({ dataCourse }: any) {
                           <p className="text-xs text-[#6a6f73] mb-[2px] ">
                             {item?.createdBy?.name}
                           </p>
-                          <p className="font-medium text-base ">
-                            ₫ {item.price}{" "}
-                          </p>
+                          {item.discountedPrice > 0 ? (
+                            <>
+                              <div className=" flex">
+                                <p className="font-medium text-base ">
+                                  ₫ {item.discountedPrice.toLocaleString("en")}{" "}
+                                </p>
+                                <p className="font-normal text-base text-[#6a6f73] ml-[10px] line-through ">
+                                  ₫ {item.price.toLocaleString("en")}{" "}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <p className="font-medium text-base ">
+                                ₫ {item.price.toLocaleString("en")}{" "}
+                              </p>
+                            </>
+                          )}
                         </div>
                       </div>
                     </Link>

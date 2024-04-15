@@ -2,12 +2,9 @@
 
 import vnpay from "../../../public/logo-VNPAY.png";
 import Image from "next/image";
-import { Button, Form } from "antd";
 import { paymentWithVNPAY } from "@/api/user";
-import { useState } from "react";
 import "./payment.css";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 function PaymentWithVNPAY({ amount, orderId }: any) {
   const route = useRouter();

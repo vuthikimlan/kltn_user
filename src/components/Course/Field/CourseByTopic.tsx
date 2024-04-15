@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Skeleton, Tabs, TabsProps } from "antd";
 import CarouselCourse from "../Carousel";
 import CourseList from "../CourseList";
+import TabsComponent from "@/components/Tabs/Tabs";
 
 function CourseByTopic(): JSX.Element {
   const params = useParams<{ slug: string; slugTopic: string }>();
@@ -26,18 +27,18 @@ function CourseByTopic(): JSX.Element {
     fetchData();
   }, [slugField, slugTopic]);
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Thịnh hành",
-      children: <CarouselCourse dataCourse={data?.courses} />,
-    },
-    {
-      key: "2",
-      label: "Mới",
-      children: <CarouselCourse dataCourse={data?.courses} />,
-    },
-  ];
+  // const items: TabsProps["items"] = [
+  //   {
+  //     key: "1",
+  //     label: "Thịnh hành",
+  //     children: <CarouselCourse dataCourse={data?.courses} />,
+  //   },
+  //   {
+  //     key: "2",
+  //     label: "Mới",
+  //     children: <CarouselCourse dataCourse={data?.courses} />,
+  //   },
+  // ];
 
   return (
     <>
@@ -54,7 +55,13 @@ function CourseByTopic(): JSX.Element {
           <h1 className="text-[#2d2f31] text-2xl font-semibold mb-[16px] ">
             Các khóa học để bạn bắt đầu
           </h1>
-          <Tabs items={items} defaultActiveKey="1" />
+          {/* <Tabs items={items} defaultActiveKey="1" /> */}
+          <TabsComponent
+            label1="Thịnh hành"
+            label2="Mới"
+            children1={<CarouselCourse dataCourse={data?.courses} />}
+            children2={<CarouselCourse dataCourse={data?.courses} />}
+          />
           <h1 className="text-[#2d2f31] text-2xl font-semibold my-[20px] ">
             {`Tất cả các khóa học ${data?.nameTopic} `}
           </h1>
