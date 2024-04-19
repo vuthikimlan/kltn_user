@@ -1,5 +1,5 @@
 import { CopyOutlined, YoutubeOutlined } from "@ant-design/icons";
-import { Collapse, CollapseProps } from "antd";
+import { Collapse } from "antd";
 import { Key, useState } from "react";
 
 type ItemType = any;
@@ -8,13 +8,13 @@ function ContentCourse({ data }: any) {
   const parts = data?.parts;
   const [video, setVideo] = useState("");
 
-  const genExtra = (count: any) => {
+  const genExtra = ({ count, totalTimeLectures }: any) => {
     return (
       <>
         <div className="text-sm">
           <ul className="flex list-disc ">
             <li className="mr-[25px]  "> {count} bài giảng</li>
-            <li> 17 phút </li>
+            <li> {totalTimeLectures} phút </li>
           </ul>
         </div>
       </>
@@ -29,6 +29,7 @@ function ContentCourse({ data }: any) {
     const result = items?.map((item: any, ids: any) => {
       const i = String(ids + 1);
       const count = item.lectures.length;
+      const totalTimeLectures = item.totalTimeLectures;
       return {
         key: item?._id,
         label: `Phần ${i}: ${item?.partName} `,
@@ -45,7 +46,7 @@ function ContentCourse({ data }: any) {
                       <YoutubeOutlined className="mr-[8px]" />
                       {el?.lectureName}
                     </div>
-                    <span>16:46</span>
+                    <span>{el?.duration}</span>
                   </div>
                   {el?.document && (
                     <div className="flex justify-between">
@@ -54,7 +55,6 @@ function ContentCourse({ data }: any) {
                         {/* Nếu là tài liệu thì hiển thị icon này */}
                         <p> {el?.lectureName}</p>
                       </div>
-                      <span>00:08</span>
                     </div>
                   )}
                 </div>
@@ -62,7 +62,7 @@ function ContentCourse({ data }: any) {
             })}
           </div>
         ),
-        extra: genExtra(count),
+        extra: genExtra({ count, totalTimeLectures }),
       };
     });
     return result;
@@ -71,7 +71,7 @@ function ContentCourse({ data }: any) {
     <div className="flex ">
       <div>
         <iframe
-          width="1100"
+          width="1020"
           height="480"
           src={video}
           // src="https://firebasestorage.googleapis.com/v0/b/nodejs-b9313.appspot.com/o/Demo_NodeJS%2F%E3%80%90Vietsub%2BLyrics%E3%80%91%20Until%20I%20Found%20You%20(Juliet%20to%20your%20Romeo)%20-%20Stephen%20Sanchez%20ft.%20Em%20Beihold.mp4?alt=media&token=e6c32857-d991-4dab-aa0f-5a9ed7be372d"
@@ -82,10 +82,9 @@ function ContentCourse({ data }: any) {
         ></iframe>
       </div>
       <div className=" snap-y snap-mandatory ">
-        <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[18.3rem] ">
+        <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[26.5rem] ">
           Nội dung khóa học
         </h1>
-
         <Collapse items={itemsLecture(parts)} className="rounded-none " />
       </div>
     </div>

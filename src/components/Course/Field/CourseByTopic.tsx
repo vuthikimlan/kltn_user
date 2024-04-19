@@ -1,44 +1,24 @@
+/* eslint-disable @next/next/no-async-client-component */
 "use client";
 
 import { getTopicBySlug } from "@/api/field";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Skeleton, Tabs, TabsProps } from "antd";
+import { Skeleton } from "antd";
 import CarouselCourse from "../Carousel";
 import CourseList from "../CourseList";
 import TabsComponent from "@/components/Tabs/Tabs";
 
-function CourseByTopic(): JSX.Element {
+async function CourseByTopic() {
   const params = useParams<{ slug: string; slugTopic: string }>();
   const slugField = params.slug;
   const slugTopic = params.slugTopic;
 
-  const [data, setData] = useState<any>({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getTopicBySlug(slugField, slugTopic);
-        setData(res?.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, [slugField, slugTopic]);
-
-  // const items: TabsProps["items"] = [
-  //   {
-  //     key: "1",
-  //     label: "Thịnh hành",
-  //     children: <CarouselCourse dataCourse={data?.courses} />,
-  //   },
-  //   {
-  //     key: "2",
-  //     label: "Mới",
-  //     children: <CarouselCourse dataCourse={data?.courses} />,
-  //   },
-  // ];
+  const res = await getTopicBySlug(slugField, slugTopic);
+  let data: any = {};
+  if (res) {
+    data = res?.data;
+  }
 
   return (
     <>
@@ -55,7 +35,6 @@ function CourseByTopic(): JSX.Element {
           <h1 className="text-[#2d2f31] text-2xl font-semibold mb-[16px] ">
             Các khóa học để bạn bắt đầu
           </h1>
-          {/* <Tabs items={items} defaultActiveKey="1" /> */}
           <TabsComponent
             label1="Thịnh hành"
             label2="Mới"

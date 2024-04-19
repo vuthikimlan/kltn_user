@@ -1,13 +1,37 @@
-import { addCart } from '@/api/user';
-export const dynamic = 'force-dynamic' // defaults to auto
-export async function GET(request: Request) {
-   
-    const data = await request
-    console.log("request", data);
-
-    return  Response.json({
-        success: true,
-        data
-    })
+import { revalidatePath } from 'next/cache'
+import { NextRequest } from 'next/server'
+ 
+// export async function GET(request: NextRequest) {
     
+//   const path = request.nextUrl.searchParams.get('path')
+//   console.log('path', path);
+  
+//   if (path) {
+//     revalidatePath('path')
+//     return Response.json({ revalidated: true, now: Date.now() })
+//   }
+ 
+//   return Response.json({
+//     revalidated: false,
+//     now: Date.now(),
+//     message: 'Missing path to revalidate',
+//   })
+// }
+
+export async function GET(request: NextRequest) {
+    
+  const path = request.nextUrl.searchParams.get('path')
+  console.log('path', path);
+  
+  if (path) {
+    revalidatePath('http://localhost:8000/course/getAll')
+    return Response.json({ revalidated: true, now: Date.now() })
+  }
+ 
+  return Response.json({
+    revalidated: false,
+    now: Date.now(),
+    message: 'Missing path to revalidate',
+  })
 }
+

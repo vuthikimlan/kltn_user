@@ -1,19 +1,15 @@
-"use client";
-
 import { getAllField } from "@/api/field";
-import { Menu, MenuProps, Popover } from "antd";
+import { Popover } from "antd";
 import Link from "next/link";
-import { Key, useEffect, useState } from "react";
+import { Key } from "react";
 import MenuTopic from "./MenuTopic";
 
-function MenuCategory() {
-  const [field, setField] = useState();
-
-  useEffect(() => {
-    getAllField().then((res) => {
-      setField(res?.data?.items);
-    });
-  }, []);
+async function MenuCategory() {
+  const res = await getAllField();
+  let field: any[] = [];
+  if (res) {
+    field = res?.data?.items;
+  }
 
   return (
     <div className=" border-t-[1px] border-solid border-[#d1d7dc] shadow-md flex justify-center ">

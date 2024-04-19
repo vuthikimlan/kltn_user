@@ -29,7 +29,7 @@ function Header() {
       <div className="flex justify-center mt-[20px] pb-[7px]  shadow-lg shadow-gray-300 ">
         {login ? (
           <>
-            <Link href={"/home"} className="uppercase font-semibold mr-[8%] ">
+            <Link href={"/home"} className="uppercase font-semibold mr-[2%] ">
               e-learning
             </Link>
           </>

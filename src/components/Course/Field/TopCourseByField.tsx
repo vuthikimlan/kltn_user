@@ -1,18 +1,17 @@
-"use client";
+// "use client";
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { getFieldBySlug } from "@/api/field";
 import { Skeleton } from "antd";
 import CarouselCourse from "../Carousel";
 
-function TopCourseByField({ slug }: any) {
-  const [field, setField] = useState({});
-  useEffect(() => {
-    getFieldBySlug(slug).then((res) => {
-      setField(res?.data);
-    });
-  }, [slug]);
-  if (!Object.keys(field).length) {
+async function TopCourseByField({ slug }: any) {
+  const res = await getFieldBySlug(slug);
+  let field: any = {};
+  if (res) {
+    field = res?.data;
+  }
+  if (!field) {
     return (
       <div>
         <Skeleton active />

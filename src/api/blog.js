@@ -1,7 +1,7 @@
 import axios from "./request";
 
 export const getAllBlog = async () => {
-    const res = await fetch('http://localhost:8000/blog/getAll')
+    const res = await fetch('http://localhost:8000/blog/getAll',{ next: { revalidate: 0 } })
     if(!res.ok) {
         throw new Error('Failed to fetch data')
     }
@@ -12,7 +12,7 @@ export const getAllBlog = async () => {
 
 
 export const getBlogBySlug = async (slug) => {
-    const response = await fetch(`http://localhost:8000/blog/${slug}`); 
+    const response = await fetch(`http://localhost:8000/blog/${slug}`, { next: { revalidate: 0 } }); 
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

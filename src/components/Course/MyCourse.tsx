@@ -42,7 +42,10 @@ function MyCourses() {
                         <p className="ml-[10px] ">({items?.userRatings}) </p>
                       </div>
                       <ul className="flex list-disc text-xs ">
-                        <li className="ml-[15px] "> Tổng số 28 giờ </li>
+                        <li className="ml-[15px] ">
+                          {" "}
+                          Tổng số {items?.totalTimeCourse} phút{" "}
+                        </li>
                         <li className="ml-[20px] ">
                           {" "}
                           {items?.totalLecture} bài giảng{" "}

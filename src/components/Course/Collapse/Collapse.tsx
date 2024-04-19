@@ -1,18 +1,18 @@
 import { CopyOutlined, YoutubeOutlined } from "@ant-design/icons";
-import { Collapse, CollapseProps } from "antd";
+import { Collapse } from "antd";
 import Link from "next/link";
 import { Key } from "react";
 
 type ItemType = any;
 
-function CollapseCourse({ data }: any) {
-  const genExtra = () => {
+function CollapseCourse({ data, numPart, totalTime }: any) {
+  const genExtra = (item: any) => {
     return (
       <>
         <div className="text-sm">
           <ul className="flex list-disc ">
-            <li className="mr-[25px]  "> 3 bài giảng</li>
-            <li> 17 phút </li>
+            <li className="mr-[25px]  ">{item?.lectures.length} bài giảng </li>
+            <li>{item?.totalTimeLectures} phút </li>
           </ul>
         </div>
       </>
@@ -37,7 +37,7 @@ function CollapseCourse({ data }: any) {
                       {/* link áp dụng với những bài giảng đc xem trước khi chưa mua */}
                       {el?.lectureName}
                     </div>
-                    <span>16:46</span>
+                    <span>{el?.duration}</span>
                   </div>
                   {el?.document && (
                     <div className="flex justify-between">
@@ -46,7 +46,6 @@ function CollapseCourse({ data }: any) {
                         {/* Nếu là tài liệu thì hiển thị icon này */}
                         <p> {el?.lectureName}</p>
                       </div>
-                      <span>00:08</span>
                     </div>
                   )}
                 </div>
@@ -54,7 +53,7 @@ function CollapseCourse({ data }: any) {
             })}
           </div>
         ),
-        extra: genExtra(),
+        extra: genExtra(item),
       };
     });
     return result;
@@ -64,9 +63,9 @@ function CollapseCourse({ data }: any) {
     <>
       <div className="text-sm  my-[8px] ">
         <ul className="flex list-disc ">
-          <li className="ml-[20px] mr-[25px] "> 16 phần</li>
-          <li className="mr-[25px] "> 192 bài giảng</li>
-          <li className="mr-[25px] "> 47 giờ 10 phút tổng thời lượng</li>
+          <li className="ml-[20px] mr-[25px] "> {numPart} phần</li>
+          {/* <li className="mr-[25px] "> 192 bài giảng</li> */}
+          <li className="mr-[25px] ">Tổng thời lượng: {totalTime} phút</li>
         </ul>
       </div>
       <Collapse items={itemsLecture(data)} />

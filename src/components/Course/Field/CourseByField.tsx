@@ -1,34 +1,28 @@
+/* eslint-disable @next/next/no-async-client-component */
 "use client";
 
 import { Skeleton, Tabs } from "antd";
-import { Key, useEffect, useState } from "react";
-import { useParams, usePathname } from "next/navigation";
+import { Key } from "react";
+import { useParams } from "next/navigation";
 import { getFieldBySlug } from "@/api/field";
-import { TabsProps } from "antd/lib";
 import CarouselCourse from "../Carousel";
 import MenuTopic from "@/components/Menu/MenuTopic";
 import Topic from "@/components/Category/Topic";
 import CourseList from "../CourseList";
 import TabsComponent from "@/components/Tabs/Tabs";
 
-function CourseByField() {
-  const [field, setField] = useState<any>({});
+async function CourseByField() {
   const params = useParams<{ slug: string }>();
-  const [loading, setLoading] = useState(true);
-
   const slug = params.slug;
-  useEffect(() => {
-    getFieldBySlug(slug)
-      .then((res) => {
-        setField(res?.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [slug]);
+
+  const res = await getFieldBySlug(slug);
+  let field: any = {};
+  if (res) {
+    field = res?.data;
+  }
 
   // Nếu field không có dữ liệu thì sẽ hiển thị loading
-  if (loading || !field) {
+  if (!field) {
     return (
       <div>
         <Skeleton active />

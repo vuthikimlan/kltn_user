@@ -1,21 +1,24 @@
-"use client";
+// "use client";
 
 import { getAllBlog } from "@/api/blog";
-import { Key, useEffect, useState } from "react";
+import { Key } from "react";
 import CarouselBlog from "./CarouselBlog";
 import MenuBlog from "../Menu/MenuBlog";
 import banner from "../../../public/reading-girl-2.png";
 import Image from "next/image";
 
-function BlogList() {
-  const [data, setData] = useState();
-  useEffect(() => {
-    getAllBlog().then((res) => {
-      setData(res?.data?.items);
-    });
-  }, []);
-
-  const blog = data as any;
+async function BlogList() {
+  // const [data, setData] = useState();
+  // useEffect(() => {
+  //   getAllBlog().then((res) => {
+  //     setData(res?.data?.items);
+  //   });
+  // }, []);
+  const res = await getAllBlog();
+  let blog: any = [];
+  if (res) {
+    blog = res?.data?.items;
+  }
 
   return (
     <div>

@@ -1,42 +1,51 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
+/* eslint-disable @next/next/no-async-client-component */
 import CommentCourse from "../Comment/Comment";
 import CollapseCourse from "./Collapse/Collapse";
 import ButtonAddCart from "../Button/AddCart";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { getCourseBySlug } from "@/api/course";
 import { CheckOutlined } from "@ant-design/icons";
+import { Skeleton } from "antd";
 
-function DetaileCourse() {
-  const [course, setCourse] = useState({});
+async function DetaileCourse() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
 
-  useEffect(() => {
-    getCourseBySlug(slug).then((res) => {
-      setCourse(res?.data);
-    });
-  }, [slug]);
+  const res = await getCourseBySlug(slug);
+  let course: any = {};
+  if (res) {
+    course = res?.data;
+  }
 
-  const data = course as any;
+  if (!course) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="bg-[#2d2f31] text-[#fff] py-[32px] relative ">
         <div className="banner w-[50%] m-[auto]">
           <h1 className=" text-3xl font-bold w-[65%] mb-[16px]  ">
-            {data?.name}
+            {course?.name}
           </h1>
-          <p className="mb-[24px] font-sans ">{data?.description}</p>
+          <p className="mb-[24px] font-sans ">{course?.description}</p>
           <div className="font-sans text-sm">
-            <span className="mr-[10px] font-sans ">Số sao</span>
-            <span className="mr-[10px] font-sans ">149 xếp hạng</span>{" "}
+            <span className="mr-[10px] font-sans ">{course?.totalRatings}</span>
+            <span className="mr-[10px] font-sans ">
+              {course?.userRatings} xếp hạng
+            </span>{" "}
             {/* Tính tổng số các đánh giá của khóa học - có thể link đến phần đánh giá */}
-            <span className="mr-[10px] font-sans ">500 học viên</span>{" "}
+            <span className="mr-[10px] font-sans ">
+              {course?.users?.length} học viên
+            </span>{" "}
             {/* Tính tổng số lượng các học viên của khóa học */}
             <br />
-            <p className="font-sans mt-[10px] ">{`Được tạo bởi ${data?.createdBy?.name} `}</p>
+            <p className="font-sans mt-[10px] ">{`Được tạo bởi ${course?.createdBy?.name} `}</p>
             {/* Có thể link đến phần giới thiệu của tác giả */}
           </div>
         </div>
@@ -53,7 +62,7 @@ function DetaileCourse() {
               Nội dung bài học
             </h1>
             <ul className=" grid-cols-2 grid gap-2 ">
-              {data?.lessonContent?.map((el: any, ind: any) => {
+              {course?.lessonContent?.map((el: any, ind: any) => {
                 return (
                   <div key={ind} className="flex items-baseline ">
                     <CheckOutlined className="mt-[6px] " />
@@ -69,13 +78,17 @@ function DetaileCourse() {
             <h1 className=" text-xl font-semibold mb-[16px] ">
               Nội dung khóa học
             </h1>
-            <CollapseCourse data={data?.parts} />
+            <CollapseCourse
+              data={course?.parts}
+              numPart={course?.parts.length}
+              totalTime={course?.totalTimeCourse}
+            />
           </div>
           <div className="mb-[25px] requestCourse ">
             {/* Lấy dữ liệu từ điều kiện tham gia */}
             <h1 className=" text-xl font-semibold mb-[16px] ">Yêu cầu</h1>
             <ul className="list-disc ml-[20px] ">
-              {data?.conditionParticipate?.map((el: any, ind: any) => {
+              {course?.conditionParticipate?.map((el: any, ind: any) => {
                 return (
                   <div key={ind} className="flex items-baseline ">
                     <li className="ml-[10px] mb-[5px] ">{el} </li>
@@ -102,9 +115,9 @@ function DetaileCourse() {
               phát triển một website thực tế với React.JS. Khóa học sẽ thực sự
               bổ ích cũng như mang lại rất nhiều kiến thức cho các bạn mới bắt
               đầu. Với phương châm, học đi đôi với thực hành, chúng ta chỉ học
-              "vừa đủ", chỉ học những kiến thức code lỗi nhất, hi vọng các bạn
-              sẽ học hỏi được nhiều kiến thức, cũng như tự tin sử dụng React cho
-              công việc của mình.
+              chỉ học những kiến thức code lỗi nhất, hi vọng các bạn sẽ học hỏi
+              được nhiều kiến thức, cũng như tự tin sử dụng React cho công việc
+              của mình.
             </p>
           </div>
           <div className="mb-[25px] objectCourse ">
@@ -113,7 +126,7 @@ function DetaileCourse() {
               Đối tượng của khóa học này:{" "}
             </h1>
             <ul className="list-disc ml-[20px] ">
-              {data?.object?.map((el: any, ind: any) => {
+              {course?.object?.map((el: any, ind: any) => {
                 return (
                   <div key={ind} className="flex items-baseline ">
                     <li className="ml-[10px] mb-[5px] ">{el} </li>
@@ -123,10 +136,14 @@ function DetaileCourse() {
             </ul>
           </div>
           <div className="w-[35%] m-[auto] ">
-            <ButtonAddCart courseId={data?._id} />
+            <ButtonAddCart courseId={course?._id} />
           </div>
         </div>
-        <CommentCourse data={data?.ratings} totalRating={data?.totalRatings} />
+        <CommentCourse
+          data={course?.ratings}
+          totalRating={course?.totalRatings}
+          ratings={course?.userRatings}
+        />
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 export const getAllField = async (params) => {
-    const response = await fetch('http://localhost:8000/field/getAll', { next: { revalidate: 3600 } }); 
+    const response = await fetch('http://localhost:8000/field/getAll', { next: { revalidate: 0 } }); 
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -8,7 +8,7 @@ export const getAllField = async (params) => {
 };
 
 export const getFieldBySlug = async (slug) => {
-  const response = await fetch(`http://localhost:8000/field/${slug}`); 
+  const response = await fetch(`http://localhost:8000/field/${slug}`,  { next: { revalidate: 0 } }); 
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -19,7 +19,7 @@ export const getFieldBySlug = async (slug) => {
 
 
 export const getTopicBySlug = async (slugField, slugTopic) => {
-  const response = await fetch(`http://localhost:8000/field/${slugField}/${slugTopic}`); 
+  const response = await fetch(`http://localhost:8000/field/${slugField}/${slugTopic}`, { next: { revalidate: 0 } }); 
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }

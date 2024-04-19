@@ -1,18 +1,15 @@
-"use client";
+// "use client";
 
 import { getAllBlog } from "@/api/blog";
 import Link from "next/link";
-import { Key, useEffect, useState } from "react";
+import { Key } from "react";
 
-function MenuBlog() {
-  const [data, setData] = useState();
-  useEffect(() => {
-    getAllBlog().then((res) => {
-      setData(res?.data?.items);
-    });
-  }, []);
-
-  const field = data as any;
+async function MenuBlog() {
+  const res = await getAllBlog();
+  let blog: any = [];
+  if (res) {
+    blog = res?.data?.items;
+  }
 
   return (
     <div className="border-[1px] border-solid border-[#1c1d1f] bg-[#1c1d1f] shadow-md flex justify-center ">
@@ -21,7 +18,7 @@ function MenuBlog() {
         {" "}
         Blog{" "}
       </Link>
-      {(field as any)?.map((el: any, ind: Key) => {
+      {blog?.map((el: any, ind: Key) => {
         return (
           <div key={ind} className="m-[13px] ">
             <Link href={`http://localhost:3000/blog/${el?.field?.slugField}`}>

@@ -1,7 +1,7 @@
 import axios from "./request";
 
 export const getAllCourse = async (params) => {
-    const response = await fetch('http://localhost:8000/course/getAll'); 
+    const response = await fetch('http://localhost:8000/course/getAll', { next: { revalidate: 0 } }); 
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -9,15 +9,22 @@ export const getAllCourse = async (params) => {
       return data;
 };
 
+// export const getAllCourse = async (params) => {
+//   const response = await fetch('http://localhost:3000/api/cache?path=course/getAll'); 
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data');
+//   }
+//   const data = await response.json();
+//   return data;
+// };
+
 export const getCourseBySlug = async (slug) => {
-  console.log('slug', slug);
-  const response = await fetch(`http://localhost:8000/course/detail/${slug}`); 
+  const response = await fetch(`http://localhost:8000/course/detail/${slug}`, { next: { revalidate: 0 } }); 
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
     const data = await response.json();
     return data;
-  
 };
 
 export const filterCourse = (values) => {

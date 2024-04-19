@@ -13,11 +13,11 @@ function IntroduceCourse({ course }: any) {
           <p>Theo số liệu</p>
           <div>
             <p>{course?.level}</p>
-            <p>Học viên: 300</p>
+            <p>Học viên: {course?.users.length} </p>
           </div>
           <div>
             <p>Bài giảng: {course?.totalLecture}</p>
-            <p>Video: 1.5 giờ</p>
+            <p>Video: {course?.totalTimeCourse} phút</p>
           </div>
         </div>
         <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex justify-between p-[20px] ">

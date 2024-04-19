@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import ModalComment from "../Modal/CommentAll";
 import { Key } from "react";
 
-function CommentCourse({ data, totalRating }: any) {
+function CommentCourse({ data, totalRating, ratings }: any) {
   const dispatch = useDispatch();
 
   function formatDate(updateDay: any) {
@@ -16,18 +16,18 @@ function CommentCourse({ data, totalRating }: any) {
   }
   return (
     <>
+      <div className="flex">
+        <h1 className=" text-xl font-semibold mb-[16px] mr-[20px] ">
+          <StarFilled style={{ color: "#b4690e" }} />
+          {`${totalRating} xếp hạng khóa học`}
+        </h1>
+        <h1 className=" text-xl font-semibold mb-[16px] ">
+          {ratings} xếp hạng
+        </h1>
+      </div>
       {data?.map((el: any, ind: Key) => {
         return (
           <div key={ind}>
-            <div className="flex">
-              <h1 className=" text-xl font-semibold mb-[16px] mr-[20px] ">
-                <StarFilled style={{ color: "#b4690e" }} />
-                {`${totalRating} xếp hạng khóa học`}
-              </h1>
-              <h1 className=" text-xl font-semibold mb-[16px] ">
-                250 xếp hạng
-              </h1>
-            </div>
             <div className="grid-cols-2 grid gap-8 ">
               <div className="border-t-[1px] border-solid border-[#d1d7dc] py-[20px]">
                 <div className="flex mb-[10px] ">
@@ -53,7 +53,7 @@ function CommentCourse({ data, totalRating }: any) {
       >
         Hiển thị tất cả các đánh giá
       </Button>
-      <ModalComment />
+      <ModalComment data={data} totalRating={totalRating} ratings={ratings} />
     </>
   );
 }
