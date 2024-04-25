@@ -71,8 +71,8 @@ function ContentCourse({ data }: any) {
     <div className="flex ">
       <div>
         <iframe
-          width="1020"
-          height="480"
+          width="1370"
+          height="600"
           src={video}
           // src="https://firebasestorage.googleapis.com/v0/b/nodejs-b9313.appspot.com/o/Demo_NodeJS%2F%E3%80%90Vietsub%2BLyrics%E3%80%91%20Until%20I%20Found%20You%20(Juliet%20to%20your%20Romeo)%20-%20Stephen%20Sanchez%20ft.%20Em%20Beihold.mp4?alt=media&token=e6c32857-d991-4dab-aa0f-5a9ed7be372d"
           frameBorder="0"
@@ -82,7 +82,7 @@ function ContentCourse({ data }: any) {
         ></iframe>
       </div>
       <div className=" snap-y snap-mandatory ">
-        <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[26.5rem] ">
+        <h1 className="font-semibold bg-[#fff] border-[1px] border-solid border-transparent p-[15px]  w-[30.5rem] ">
           Nội dung khóa học
         </h1>
         <Collapse items={itemsLecture(parts)} className="rounded-none " />

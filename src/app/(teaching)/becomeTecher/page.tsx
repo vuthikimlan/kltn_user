@@ -80,7 +80,7 @@ function PageTeaching() {
   return (
     <>
       <div className="  relative ">
-        <img src={teacher.src} alt="teacher" className="w-full h-[455px] " />
+        <img src={teacher.src} alt="teacher" className="w-full h-[525px] " />
         <div className=" absolute bottom-[5rem] pl-[10%]  w-[27rem] tracking-wide leading-loose ">
           <h1 className=" text-4xl font-semibold font-serif  subpixel-antialiased ">
             Hãy đến giảng dạy với chúng tôi

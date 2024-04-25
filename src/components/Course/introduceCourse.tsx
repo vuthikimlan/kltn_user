@@ -1,6 +1,15 @@
-import { Avatar } from "antd";
+import { Avatar, Skeleton } from "antd";
 
 function IntroduceCourse({ course }: any) {
+  // Nếu course không có dữ liệu thì sẽ hiển thị loading
+  if (!course) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
+  const countUser = course?.users?.length || 0;
   return (
     <>
       <div>
@@ -13,7 +22,7 @@ function IntroduceCourse({ course }: any) {
           <p>Theo số liệu</p>
           <div>
             <p>{course?.level}</p>
-            <p>Học viên: {course?.users.length} </p>
+            <p>Học viên: {countUser} </p>
           </div>
           <div>
             <p>Bài giảng: {course?.totalLecture}</p>

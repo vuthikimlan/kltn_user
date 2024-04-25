@@ -6,7 +6,7 @@ async function StudentWatch() {
 
   let course: any[] = [];
   if (res) {
-    course = res?.data?.items.slice(0, 4);
+    course = res?.data?.items.slice(0, 10);
   }
 
   return (

@@ -1,26 +1,31 @@
 "use client";
+/* eslint-disable @next/next/no-async-client-component */
 
 import IntroduceCourse from "../introduceCourse";
 import CommentList from "../../Comment/CommentList";
 import ContentCourse from "../Collapse/ContentCourse";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { getCourseBySlug } from "@/api/course";
 import TabsComponent from "@/components/Tabs/Tabs";
+import { Skeleton } from "antd";
 
-function LearningCourse() {
-  const [data, setData] = useState<any>({});
+async function LearningCourse() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
-  const handleGetSlug = () => {
-    getCourseBySlug(slug).then((res) => {
-      setData(res?.data);
-    });
-  };
-  useEffect(() => {
-    handleGetSlug();
-  }, [slug]);
+  let data: any = {};
 
+  const res = await getCourseBySlug(slug);
+  if (res) {
+    data = res?.data;
+  }
+
+  if (!data) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
   return (
     <>
       <div className=" border-[1px] boder-solid border-[#2d2f31] bg-[#2d2f31] text-[#fff] p-[20px] ">
@@ -36,12 +41,11 @@ function LearningCourse() {
             label1="Tổng quan"
             label2="Đánh giá"
             children1={<IntroduceCourse course={data} />}
-            children2={<CommentList course={data} getcomment={handleGetSlug} />}
+            children2={<CommentList course={data} />} //getcomment={handleGetSlug}
           />
         </div>
       </div>
     </>
   );
 }
-
 export default LearningCourse;
