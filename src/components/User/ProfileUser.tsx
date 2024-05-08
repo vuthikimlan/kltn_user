@@ -1,12 +1,15 @@
 "use client";
 
 import { getProfileUser } from "@/api/user";
+import { profileUser } from "@/store/appSlice";
 import { Image } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function ProfileUser() {
   const [data, setData] = useState<any>();
+  const dispatch = useDispatch();
   const handleGetProfile = () => {
     getProfileUser().then((res) => {
       setData(res?.data?.data);
@@ -61,6 +64,9 @@ function ProfileUser() {
               <Link
                 className="border-black bg-black border-solid hover:bg-[#3e4143] hover:border-[#3e4143] px-[5rem] text-white py-[6px] "
                 href="/user/edit-profile"
+                onClick={() => {
+                  dispatch(profileUser(data));
+                }}
               >
                 Chỉnh sửa
               </Link>

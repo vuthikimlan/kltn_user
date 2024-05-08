@@ -1,6 +1,6 @@
 import { Button, notification } from "antd";
 import "./style.css";
-import { addCart } from "@/api/user";
+import { addCart, addCartAnonymous } from "@/api/user";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,23 @@ function ButtonAddCart({ courseId }: any) {
       }
     });
   };
+  const handleAddCartAnonymous = () => {
+    addCartAnonymous(courseId).then((res) => {
+      if (res.status === 200) {
+        // const count = res?.data?.data?.countCourse;
+        // Cookies.set("cartCount", count);
+        // dispatch(countCart(count));
+        notification.success({
+          message: "Thêm khóa học vào giỏ hàng thành công",
+        });
+      } else if (res.status === 201) {
+        notification.success({
+          message: "Khóa học đã tồn tại trong giỏ hàng",
+        });
+      }
+    });
+  };
+
   return (
     <>
       <Button
@@ -36,7 +53,8 @@ function ButtonAddCart({ courseId }: any) {
           if (token) {
             handleAddCart();
           } else {
-            route.push("/login");
+            // route.push("/login");
+            handleAddCartAnonymous();
           }
         }}
       >

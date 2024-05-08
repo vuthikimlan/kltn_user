@@ -1,31 +1,21 @@
 "use client";
 
-import { ProForm, ProFormText, FormInstance } from "@ant-design/pro-components";
-import ButtonUpload from "../Button/ButtonUpload";
 import { useEffect, useRef, useState } from "react";
-import { Button, message } from "antd";
+import { Button, Form, Input, message } from "antd";
 import Link from "next/link";
 import { getProfileUser, updateProfile } from "@/api/user";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 function EditProfile() {
-  const formRef = useRef<FormInstance>();
-  const [data, setData] = useState<any>({});
   const route = useRouter();
-  const handleGetProfile = () => {
-    getProfileUser().then((res) => {
-      setData(res?.data?.data);
-    });
-  };
-  useEffect(() => {
-    handleGetProfile();
-  }, []);
+  const user = useSelector((state: any) => state.app.profileUser);
 
   const handleUpdateProfile = (values: any) => {
     updateProfile(values).then((res) => {
       if (res?.data?.success) {
         message.success("Cập nhật thông tin thành công");
-        handleGetProfile();
         route.push("/user");
       } else {
         message.error("Cập nhật thông tin không thành công");
@@ -39,86 +29,84 @@ function EditProfile() {
         Chỉnh sửa thông tin cá nhân
       </h1>
       <div className=" my-[2rem] border-[1px] border-solid px-[70px] py-[30px] ">
-        <ProForm
-          submitter={false}
+        <Form
           layout="vertical"
-          initialValues={data}
+          initialValues={user}
           onFinish={async (values: any) => {
             handleUpdateProfile(values);
           }}
-          formRef={formRef}
         >
-          <ProForm.Group>
-            <ButtonUpload
-              name="avatar"
-              initialValue={data?.avatar}
-              label="Avatar"
+          <Form.Item
+            name="name"
+            label="Họ và tên"
+            initialValue={user?.name}
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập họ và tên",
+              },
+            ]}
+          >
+            <Input
+              className="input w-[74%]  "
+              placeholder="Họ và tên"
+              size="large"
             />
-          </ProForm.Group>
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="E-mail"
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập E-mail của bạn",
+              },
+              {
+                type: "email",
+                message: "E-mail không hợp lệ",
+              },
+            ]}
+          >
+            <Input
+              className="input w-[74%] "
+              type="email"
+              placeholder="email"
+              size="large"
+            />
+          </Form.Item>
 
-          <ProForm.Group>
-            <ProFormText
-              className="w-[100%] hover:border-[#FB9400] "
-              //   initialValue="Nguyen Van A"
-              width="lg"
-              name="name"
-              label="Họ và tên"
-              placeholder="Nhập họ và tên"
-              //   rules={[
-              //     {
-              //       required: true,
-              //       message: "Vui lòng nhập họ và tên",
-              //     },
-              //   ]}
-            />
-            <ProFormText
-              className="w-[100%] hover:border-[#FB9400] "
-              width="lg"
-              name="email"
-              label="E-mail"
-              placeholder="E-mail"
-              //   rules={[
-              //     {
-              //       type: "email",
-              //       message: "E-mail không hợp lệ",
-              //     },
-              //     {
-              //       required: true,
-              //       message: "Vui lòng nhập E-mail của bạn",
-              //     },
-              //   ]}
-            />
-            <ProFormText
-              className="w-[100%] hover:border-[#FB9400] "
-              width="lg"
-              name="phone"
-              label="Số điện thoại:"
+          <Form.Item
+            name="phone"
+            label="Số điện thoại:"
+            initialValue={user?.phone}
+            rules={[
+              {
+                required: true,
+                message: "Vui lòng nhập số điện thoại ",
+              },
+            ]}
+          >
+            <Input
+              className="input w-[74%]  "
               placeholder="Số điện thoại"
-              //   rules={[
-              //     {
-              //       required: true,
-              //       message: "Vui lòng nhập Số điện thoại ",
-              //     },
-              //     {
-              //       pattern: /^[0-9]{10,}$/,
-              //       message: "Số điện thoại không hợp lệ!",
-              //     },
-              //   ]}
+              size="large"
             />
-          </ProForm.Group>
-          <div className=" relative left-[19.5rem] ">
-            <Link href="/user" className="mr-[10px] ">
-              Hủy{" "}
-            </Link>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className=" bg-black hover:bg-[#3e4143]"
-            >
-              Cập nhật
-            </Button>
+          </Form.Item>
+          <div className=" ml-[29.5rem] ">
+            <Form.Item>
+              <Link href="/user" className="mr-[10px] ">
+                Hủy{" "}
+              </Link>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className=" bg-[#fff] border-[#4096ff] text-xl rounded-none text-white font-semibold  "
+              >
+                Cập nhật
+              </Button>
+            </Form.Item>
           </div>
-        </ProForm>
+        </Form>
       </div>
     </div>
   );

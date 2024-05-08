@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { Key } from "react";
-import { Col, Popover, Row } from "antd";
+import { Col, Popover, Rate, Row } from "antd";
 import Link from "next/link";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -43,6 +43,17 @@ function CarouselCourse({ dataCourse }: any) {
                           <p className="font-medium text-base mb-[2px] mt-[4px] ">
                             {item?.name}
                           </p>
+                          {item?.ratings.map((el: any, ind: Key) => {
+                            return (
+                              <div key={ind}>
+                                <Rate
+                                  disabled
+                                  allowHalf
+                                  defaultValue={el?.star}
+                                />{" "}
+                              </div>
+                            );
+                          })}
                           <p className="text-xs text-[#6a6f73] mb-[2px] ">
                             {item?.createdBy?.name}
                           </p>

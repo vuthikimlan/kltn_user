@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-async-client-component */
 
 import IntroduceCourse from "../introduceCourse";
 import CommentList from "../../Comment/CommentList";
@@ -8,16 +7,22 @@ import { useParams } from "next/navigation";
 import { getCourseBySlug } from "@/api/course";
 import TabsComponent from "@/components/Tabs/Tabs";
 import { Skeleton } from "antd";
+import { useEffect, useState } from "react";
 
-async function LearningCourse() {
+function LearningCourse() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
-  let data: any = {};
+  const [data, setData] = useState<any>(null);
 
-  const res = await getCourseBySlug(slug);
-  if (res) {
-    data = res?.data;
-  }
+  const handleGetSlug = () => {
+    getCourseBySlug(slug).then((res) => {
+      setData(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetSlug();
+  }, []);
 
   if (!data) {
     return (
@@ -41,7 +46,7 @@ async function LearningCourse() {
             label1="Tổng quan"
             label2="Đánh giá"
             children1={<IntroduceCourse course={data} />}
-            children2={<CommentList course={data} />} //getcomment={handleGetSlug}
+            children2={<CommentList course={data} getcomment={handleGetSlug} />} //getcomment={handleGetSlug}
           />
         </div>
       </div>

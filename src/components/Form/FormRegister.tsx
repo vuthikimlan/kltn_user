@@ -26,8 +26,8 @@ function FormRegister() {
     });
   };
   return (
-    <div className="w-[28%] m-[auto] pt-[30px]">
-      <h1 className="text-lg font-semibold mb-[20px] w-[70%] m-[auto] ">
+    <div className="w-[28%] m-[auto] p-[30px] border-solid border-[1px]  shadow-xl mt-[7rem]">
+      <h1 className="text-lg font-semibold mb-[20px] w-[70%] m-[auto] text-center ">
         Đăng ký và bắt đầu học
       </h1>
       <Form onFinish={onFinish}>
@@ -106,8 +106,8 @@ function FormRegister() {
         <Form.Item>
           <ProFormSelect
             name="role"
-            className="input h-[40px] "
-            width={350}
+            className="input h-[40px] w-[74%] "
+            width={465}
             placeholder="Vai trò"
             options={[
               { label: "Học Viên", value: "STUDENT" },
@@ -121,7 +121,8 @@ function FormRegister() {
           <Button
             type="primary"
             htmlType="submit"
-            className="button bg-[#fff] border-[#4096ff] text-[#4096ff] text-xl rounded-none text-white font-semibold w-[74%] "
+            style={{ width: "465px" }}
+            className="button bg-[#fff] border-[#4096ff] text-xl rounded-none text-white font-semibold w-[74%] "
           >
             Đăng ký
           </Button>

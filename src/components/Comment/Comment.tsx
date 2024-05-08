@@ -1,7 +1,7 @@
 "use client";
 import { modalOpen } from "@/store/appSlice";
 import { StarFilled, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Rate } from "antd";
 import { useDispatch } from "react-redux";
 import ModalComment from "../Modal/CommentAll";
 import { Key } from "react";
@@ -34,7 +34,10 @@ function CommentCourse({ data, totalRating, ratings }: any) {
                   <Avatar size="large" icon={<UserOutlined />} />
                   <div className="ml-[15px] text-sm ">
                     <p className="font-bold ">{el?.postedBy?.name}</p>
-                    <span className="mr-[5px] ">5 sao</span>
+                    <span className="mr-[5px] ">
+                      {" "}
+                      <Rate disabled allowHalf defaultValue={el?.star} />{" "}
+                    </span>
                     <span>{formatDate(`${el?.updatedAt}`)}</span>
                   </div>
                 </div>

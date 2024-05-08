@@ -16,9 +16,7 @@ function DeleteCart({ courseId, handleGetCart }: any) {
           message: "Xóa khóa học khỏi giỏ hàng thành công",
         });
         Cookies.set("cartCount", count);
-
         dispatch(countCart(count));
-
         handleGetCart();
       }
     });

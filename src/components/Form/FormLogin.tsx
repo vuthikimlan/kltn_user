@@ -30,13 +30,15 @@ function FormLogin() {
           message.success("Đăng nhập thành công");
           route.push("/home");
         }
+      } else if (res?.data?.success === false) {
+        message.error(res?.data?.error?.message);
       }
     });
   };
 
   return (
-    <div className="w-[28%] m-[auto] pt-[30px]  ">
-      <h1 className="text-lg font-semibold mb-[20px] ">
+    <div className="w-[28%] m-[auto] p-[30px] border-solid border-[1px]  shadow-xl mt-[7rem] ">
+      <h1 className="text-lg font-semibold mb-[20px] text-center ">
         Đăng nhập vào tài khoản E-Learning của bạn
       </h1>
       <Form onFinish={onFinish}>

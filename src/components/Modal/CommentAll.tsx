@@ -3,7 +3,7 @@ import { modalClose } from "@/store/appSlice";
 import { RootState } from "@/store/store";
 import { StarFilled, UserOutlined } from "@ant-design/icons";
 import { ModalForm } from "@ant-design/pro-components";
-import { Avatar, Input } from "antd";
+import { Avatar, Input, Rate } from "antd";
 import { Key } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -38,7 +38,7 @@ function ModalComment({ data, totalRating, ratings }: any) {
               <StarFilled style={{ color: "#b4690e" }} />
               {totalRating} xếp hạng khóa học{" "}
             </h1>
-            <h1 className=" text-xl font-semibold mb-[16px] ">
+            <h1 className=" text-xl font-semibold mb-[16px] ml-[2rem] ">
               {ratings} xếp hạng
             </h1>
           </div>
@@ -55,7 +55,9 @@ function ModalComment({ data, totalRating, ratings }: any) {
                         <Avatar size="large" icon={<UserOutlined />} />
                         <div className="ml-[15px] ">
                           <p className="font-bold ">{el?.postedBy?.name}</p>
-                          <span className="mr-[5px] ">5 sao</span>
+                          <span className="mr-[5px] ">
+                            <Rate disabled allowHalf defaultValue={el?.star} />{" "}
+                          </span>
                           <span>{formatDate(`${el?.updatedAt}`)}</span>
                         </div>
                       </div>

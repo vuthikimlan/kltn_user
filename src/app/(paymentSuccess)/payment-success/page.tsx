@@ -1,9 +1,8 @@
 "use client";
 import { getVpayIpn } from "@/api/user";
-import GetIPN from "@/components/Button/getIPN";
+import { countCart } from "@/store/appSlice";
 import { Button, Result } from "antd";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 function PaymentSuccess(params: any) {
   const router = useRouter();
@@ -28,7 +27,6 @@ function PaymentSuccess(params: any) {
             key="redirec"
             onClick={() => {
               handleIPN();
-              // router.push("/home");
             }}
           >
             Quay về trang chủ

@@ -2,7 +2,7 @@
 "use client";
 
 import { Skeleton, Tabs } from "antd";
-import { Key } from "react";
+import { Key, use, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getFieldBySlug } from "@/api/field";
 import CarouselCourse from "../Carousel";
@@ -11,15 +11,20 @@ import Topic from "@/components/Category/Topic";
 import CourseList from "../CourseList";
 import TabsComponent from "@/components/Tabs/Tabs";
 
-async function CourseByField() {
+function CourseByField() {
   const params = useParams<{ slug: string }>();
+  const [field, setField] = useState<any>(null);
   const slug = params.slug;
 
-  const res = await getFieldBySlug(slug);
-  let field: any = {};
-  if (res) {
-    field = res?.data;
-  }
+  const handleGetFieldBySlug = () => {
+    getFieldBySlug(slug).then((res: any) => {
+      setField(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetFieldBySlug();
+  }, [slug]);
 
   // Nếu field không có dữ liệu thì sẽ hiển thị loading
   if (!field) {
@@ -62,7 +67,7 @@ async function CourseByField() {
         <h1 className="text-[#2d2f31] text-2xl font-semibold mb-[16px] mt-[30px] ">
           Chủ đề phổ biến{" "}
         </h1>
-        <div className="flex  grid-cols-3 grid gap-x-3  ">
+        <div className="grid-cols-3 grid gap-x-3  ">
           {dataTopic.map((item: any, ind: Key) => {
             return (
               <div key={ind} className=" ">

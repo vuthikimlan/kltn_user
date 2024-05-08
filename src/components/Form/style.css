@@ -1,4 +1,8 @@
 :where(.css-dev-only-do-not-override-1drr2mu).ant-btn {
-    height: 45px;
-    color: #4096ff;
+  height: 45px;
+  color: #4096ff;
+}
+
+.ant-form-item-control-input {
+  width: 100%;
 }

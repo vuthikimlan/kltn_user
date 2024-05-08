@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-async-client-component */
 "use client";
 
 import { getTopicBySlug } from "@/api/field";
@@ -9,16 +8,27 @@ import CarouselCourse from "../Carousel";
 import CourseList from "../CourseList";
 import TabsComponent from "@/components/Tabs/Tabs";
 
-async function CourseByTopic() {
+function CourseByTopic() {
   const params = useParams<{ slug: string; slugTopic: string }>();
+  const [data, setData] = useState<any>({});
   const slugField = params.slug;
   const slugTopic = params.slugTopic;
 
-  const res = await getTopicBySlug(slugField, slugTopic);
-  let data: any = {};
-  if (res) {
-    data = res?.data;
-  }
+  // const res = await getTopicBySlug(slugField, slugTopic);
+  // let data: any = {};
+  // if (res) {
+  //   data = res?.data;
+  // }
+
+  const handleGetTopicBySlug = () => {
+    getTopicBySlug(slugField, slugTopic).then((res: any) => {
+      setData(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetTopicBySlug();
+  }, [slugField, slugTopic]);
 
   return (
     <>

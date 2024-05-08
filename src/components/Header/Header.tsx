@@ -10,11 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { isLogin } from "@/store/appSlice";
 import ButtonSearch from "../Button/Search";
+import MenuField from "../Menu/MenuField";
 
 function Header() {
   const token = Cookies.get("jwt");
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state?.app?.isLogin);
+
+  // console.log("login", login);
 
   useEffect(() => {
     if (token) {
@@ -22,7 +25,7 @@ function Header() {
     } else {
       dispatch(isLogin(false));
     }
-  }, [token, dispatch]);
+  }, []);
 
   return (
     <>
@@ -35,11 +38,12 @@ function Header() {
           </>
         ) : (
           <>
-            <Link href={"/"} className="uppercase font-semibold mr-[8%] ">
+            <Link href={"/"} className="uppercase font-semibold mr-[2%] ">
               e-learning
             </Link>
           </>
         )}
+        {/* <MenuField /> */}
         <div className=" w-[50%] mr-[5%] ">
           <ButtonSearch />
         </div>
@@ -49,7 +53,6 @@ function Header() {
         <Link href={"http://localhost:3001/"} className=" mr-[15px] mt-[5px] ">
           Giảng dạy
         </Link>
-
         <BadgeCart />
         <div className="ml-[50px]">
           {login ? (

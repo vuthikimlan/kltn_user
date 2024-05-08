@@ -1,8 +1,6 @@
-// "use client";
-
 import Link from "next/link";
 import { getAllField } from "../../api/field";
-import { Key, useEffect, useState } from "react";
+import { Key } from "react";
 
 async function Category() {
   const res = await getAllField();

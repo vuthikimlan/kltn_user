@@ -28,7 +28,7 @@ function ContentCourse({ data }: any) {
   const itemsLecture = (items: any): ItemType[] | undefined => {
     const result = items?.map((item: any, ids: any) => {
       const i = String(ids + 1);
-      const count = item.lectures.length;
+      const count = item.totalLecturePart;
       const totalTimeLectures = item.totalTimeLectures;
       return {
         key: item?._id,

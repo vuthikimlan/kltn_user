@@ -14,7 +14,6 @@ function PaymentWithVNPAY({ amount, orderId }: any) {
       orderId: orderId,
     }).then((res) => {
       const newUrl = res?.data?.vnpUrl;
-      // setUrl(res?.data?.vnpUrl);
       if (newUrl) {
         route.push(newUrl);
       }

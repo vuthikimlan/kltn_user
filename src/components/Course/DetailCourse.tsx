@@ -1,22 +1,29 @@
 "use client";
-/* eslint-disable @next/next/no-async-client-component */
 import CommentCourse from "../Comment/Comment";
 import CollapseCourse from "./Collapse/Collapse";
 import ButtonAddCart from "../Button/AddCart";
 import { useParams } from "next/navigation";
 import { getCourseBySlug } from "@/api/course";
 import { CheckOutlined } from "@ant-design/icons";
-import { Skeleton } from "antd";
+import { Rate, Skeleton } from "antd";
+import { useEffect, useState } from "react";
 
-async function DetaileCourse() {
+function DetaileCourse() {
   const params = useParams<{ slug: string }>();
+  const [course, setCourse] = useState<any>({});
   const slug = params.slug;
+  const handleGetCourseBySlug = () => {
+    getCourseBySlug(slug).then((res) => {
+      setCourse(res?.data);
+    });
+  };
 
-  const res = await getCourseBySlug(slug);
-  let course: any = {};
-  if (res) {
-    course = res?.data;
-  }
+  useEffect(() => {
+    handleGetCourseBySlug();
+  }, [slug]);
+
+  const users = course?.users?.length;
+  const parts = course?.parts?.length;
 
   if (!course) {
     return (
@@ -36,17 +43,15 @@ async function DetaileCourse() {
           <p className="mb-[24px] font-sans ">{course?.description}</p>
           <div className="font-sans text-sm">
             <span className="mr-[10px] font-sans ">{course?.totalRatings}</span>
+            <span className="">
+              <Rate disabled defaultValue={course?.totalRatings} allowHalf />
+            </span>
             <span className="mr-[10px] font-sans ">
               {course?.userRatings} xếp hạng
             </span>{" "}
-            {/* Tính tổng số các đánh giá của khóa học - có thể link đến phần đánh giá */}
-            <span className="mr-[10px] font-sans ">
-              {course?.users?.length} học viên
-            </span>{" "}
-            {/* Tính tổng số lượng các học viên của khóa học */}
+            <span className="mr-[10px] font-sans ">{users} học viên</span>{" "}
             <br />
             <p className="font-sans mt-[10px] ">{`Được tạo bởi ${course?.createdBy?.name} `}</p>
-            {/* Có thể link đến phần giới thiệu của tác giả */}
           </div>
         </div>
 
@@ -80,7 +85,7 @@ async function DetaileCourse() {
             </h1>
             <CollapseCourse
               data={course?.parts}
-              numPart={course?.parts.length}
+              numPart={parts}
               totalTime={course?.totalTimeCourse}
             />
           </div>
@@ -99,26 +104,7 @@ async function DetaileCourse() {
           </div>
           <div className="mb-[25px] descriptionCourse ">
             <h1 className=" text-xl font-semibold mb-[16px] ">Mô tả</h1>
-            <p>
-              React.JS là một thư viện, framework giúp xây dựng một website hiện
-              đại, có tính mở rộng và hiệu năng cực lớn. Các sản phẩm tiêu biểu
-              sử dụng React có thể kể đến như Facebook và Instagram. Được
-              Facebook chống lưng, cũng như đầu tư mạnh mẽ, cộng với một cộng
-              đồng đông đảo sử dụng, React chính là thư viện Frontend phổ biến
-              nhất hiện nay, bỏ xa Vue và Angular. Với tên gọi React ULTIMATE -
-              mục tiêu đề ra của khóa học, đấy chính là nó là phiên bản cuối
-              cùng, là thứ DUY NHẤT các bạn cần, cũng như cập nhật MỚI NHẤT &
-              ĐẦY ĐỦ NHẤT cho người mới bắt đầu, muốn có một góc nhìn thực sự
-              chính xác về React.JS. Ngoài ra, khi kết thúc khóa học, các bạn
-              mới bắt đầu sẽ có đủ tự tin để làm chủ React, cũng như hiểu được,
-              nắm vững được những kiến thức cốt lõi nhất để có thể xây dựng,
-              phát triển một website thực tế với React.JS. Khóa học sẽ thực sự
-              bổ ích cũng như mang lại rất nhiều kiến thức cho các bạn mới bắt
-              đầu. Với phương châm, học đi đôi với thực hành, chúng ta chỉ học
-              chỉ học những kiến thức code lỗi nhất, hi vọng các bạn sẽ học hỏi
-              được nhiều kiến thức, cũng như tự tin sử dụng React cho công việc
-              của mình.
-            </p>
+            <p>{course?.detailsCourse}</p>
           </div>
           <div className="mb-[25px] objectCourse ">
             <h1 className=" text-xl font-semibold mb-[16px] ">
