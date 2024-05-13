@@ -8,21 +8,32 @@ import { getCourseBySlug } from "@/api/course";
 import TabsComponent from "@/components/Tabs/Tabs";
 import { Skeleton } from "antd";
 import { useEffect, useState } from "react";
+import { getCommentByCourse } from "@/api/comment";
 
 function LearningCourse() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>({});
+  const [comment, setComment] = useState<any>({});
 
-  const handleGetSlug = () => {
-    getCourseBySlug(slug).then((res) => {
+  const handleGetSlug = async () => {
+    await getCourseBySlug(slug).then((res) => {
       setData(res?.data);
     });
   };
 
+  const courseId = data?._id;
+
+  // const handleGetComment = (courseId: any) => {
+  //   getCommentByCourse(courseId).then((res) => {
+  //     setComment(res?.data?.comments);
+  //   });
+  // };
+
   useEffect(() => {
     handleGetSlug();
-  }, []);
+    // handleGetComment(courseId);
+  }, [courseId]);
 
   if (!data) {
     return (
@@ -41,12 +52,18 @@ function LearningCourse() {
           <ContentCourse data={data} />
         </div>
         <div className="ml-[20px] w-[75%] ">
-          {/* <Tabs items={items} defaultActiveKey="1" /> */}
           <TabsComponent
             label1="Tổng quan"
             label2="Đánh giá"
             children1={<IntroduceCourse course={data} />}
-            children2={<CommentList course={data} getcomment={handleGetSlug} />} //getcomment={handleGetSlug}
+            children2={
+              <CommentList
+                // comment={comment}
+                courseId={courseId}
+                totalRatings={data?.totalRatings}
+                // getcomment={handleGetComment}
+              />
+            } //getcomment={handleGetSlug}
           />
         </div>
       </div>

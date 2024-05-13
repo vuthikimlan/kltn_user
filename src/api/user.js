@@ -86,6 +86,7 @@ export const updateProfile = (values) => {
 export const uploadFile = (file) => {
   const formData = new FormData();
   formData.append("file", file);
+  console.log("file", file);
   return axios.post("/file/upload", formData);
 };
 

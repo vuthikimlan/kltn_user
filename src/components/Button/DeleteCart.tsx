@@ -11,7 +11,7 @@ function DeleteCart({ courseId, handleGetCart }: any) {
     delCart(courseId).then((res) => {
       if (res.status === 200) {
         const count = res?.data?.data?.countCourseCart;
-        console.log("count", count);
+
         notification.success({
           message: "Xóa khóa học khỏi giỏ hàng thành công",
         });

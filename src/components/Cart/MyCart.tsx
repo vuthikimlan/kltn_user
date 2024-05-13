@@ -4,7 +4,7 @@
 import Link from "next/link";
 import emptyCart from "../../../public/empty-shopping-cart-v2.jpg";
 import Image from "next/image";
-import { Button, Skeleton } from "antd";
+import { Rate, Skeleton } from "antd";
 import "./style.css";
 import { getCart } from "@/api/user";
 import { Key, useEffect, useState } from "react";
@@ -36,13 +36,20 @@ function MyCart() {
     return total;
   };
 
+  if (!data) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
+
   return (
-    <>
+    <div className="mb-[17rem]">
       {count === 0 ? (
         <>
           <div className="mt-[32px]">
             <p className="font-semibold">0 khóa học trong giỏ hàng</p>
-            Thay số lượng bằng số lấy được trong giỏ hàng
             <div className="border-[1px] border-solid border-[#e4e8eb] py-[20px]  text-center mt-[10px] ">
               <Image src={emptyCart} alt="" className="w-[20%] m-[auto] " />
               <p className="mb-[25px] text-sm">
@@ -79,11 +86,21 @@ function MyCart() {
                         <p>{el?.courseId?.name} </p>
                         <span className="text-xs ">{`Bởi ${el?.courseId?.createdBy?.name} `}</span>
                         <div className="flex text-xs my-[5px] ">
-                          <p>{`${el?.courseId?.totalRatings} sao `}</p>
+                          <p className=" mr-[2px] ">
+                            {" "}
+                            {el?.courseId?.userRatings}
+                          </p>
+                          <Rate
+                            defaultValue={el?.courseId?.userRatings}
+                            disabled={true}
+                          />
                           <p className="ml-[10px] ">{`${el?.courseId?.userRatings} xếp hạng `}</p>
                         </div>
                         <ul className="flex list-disc text-xs ">
-                          <li className="ml-[15px] "> Tổng số 28 giờ </li>
+                          <li className="ml-[15px] ">
+                            {" "}
+                            Tổng số {el?.courseId?.totalTimeCourse}{" "}
+                          </li>
                           <li className="ml-[20px] ">
                             {" "}
                             {`${el?.courseId?.totalLecture} bài giảng  `}
@@ -158,7 +175,7 @@ function MyCart() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

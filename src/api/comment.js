@@ -10,3 +10,18 @@ export const filterComment = (courseId, values) => {
   };
   return axios.post(`/comment/${courseId}/filter`, data);
 };
+
+export const getCommentByCourse = (courseId) => {
+  return axios.get(`/comment/${courseId}`);
+};
+
+// export const getCommentByCourse = async (courseId) => {
+//   const response = await fetch(`http://localhost:8000/comment/${courseId}`, {
+//     next: { revalidate: 0 },
+//   });
+//   if (!response.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
+//   const data = await response.json();
+//   return data;
+// };

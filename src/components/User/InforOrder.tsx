@@ -11,8 +11,8 @@ import PaymentWithMOMO from "../Button/PaymentMomo";
 import CancelPayment from "../Button/CancelPayment";
 
 function InforOrder() {
-  const inforOrder = useSelector((state: RootState) => state.app.inforOrder);
-  const orderId = (inforOrder as any)?._id;
+  const inforOrder = useSelector((state: any) => state.app.inforOrder);
+  const orderId = inforOrder?._id;
   const [order, setOrder] = useState<any>();
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +42,7 @@ function InforOrder() {
   const course = order?.courses;
 
   return (
-    <div className=" py-[40px] w-[70%] mx-[auto] flex ">
+    <div className=" py-[40px] w-[70%] mx-[auto] flex mb-[7rem] ">
       <div className="w-[55%] mr-[50px] border-[1px] border-solid border-[#d1d7dc] py-[40px] px-[10px] rounded-[40px] shadow-xl  ">
         <h1 className="mb-[40px]  text-xl font-semibold  text-center  ">
           Thông tin đặt hàng
@@ -50,11 +50,13 @@ function InforOrder() {
         <div>
           <div className="border-b-[1px] border-solid border-[#d1d7dc] pb-10px mb-[20px] ">
             {course.map((el: any, ind: Key) => {
+              console.log("el", el);
+
               return (
                 <div key={ind} className="flex  my-[10px] justify-between ">
                   <div className="flex  ">
                     <img
-                      src={el?.course?.image}
+                      src={el?.image}
                       alt=""
                       className="w-[50px] h-[50px] "
                     />

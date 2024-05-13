@@ -7,25 +7,34 @@ import { getCourseBySlug } from "@/api/course";
 import { CheckOutlined } from "@ant-design/icons";
 import { Rate, Skeleton } from "antd";
 import { useEffect, useState } from "react";
+import { getCommentByCourse } from "@/api/comment";
 
 function DetaileCourse() {
   const params = useParams<{ slug: string }>();
   const [course, setCourse] = useState<any>({});
+  const [comment, setComment] = useState<any>();
   const slug = params.slug;
-  const handleGetCourseBySlug = () => {
-    getCourseBySlug(slug).then((res) => {
-      setCourse(res?.data);
+
+  const handleGetCourseBySlug = async () => {
+    const res = await getCourseBySlug(slug);
+    setCourse(res?.data);
+  };
+  const courseId = course?._id;
+  const handleGetComment = (courseId: any) => {
+    getCommentByCourse(courseId).then((res) => {
+      setComment(res?.data?.comments);
     });
   };
 
   useEffect(() => {
     handleGetCourseBySlug();
-  }, [slug]);
+    handleGetComment(courseId);
+  }, [courseId]);
 
   const users = course?.users?.length;
   const parts = course?.parts?.length;
 
-  if (!course) {
+  if (!course || !comment) {
     return (
       <div>
         <Skeleton active />
@@ -42,10 +51,6 @@ function DetaileCourse() {
           </h1>
           <p className="mb-[24px] font-sans ">{course?.description}</p>
           <div className="font-sans text-sm">
-            <span className="mr-[10px] font-sans ">{course?.totalRatings}</span>
-            <span className="">
-              <Rate disabled defaultValue={course?.totalRatings} allowHalf />
-            </span>
             <span className="mr-[10px] font-sans ">
               {course?.userRatings} xếp hạng
             </span>{" "}
@@ -126,7 +131,7 @@ function DetaileCourse() {
           </div>
         </div>
         <CommentCourse
-          data={course?.ratings}
+          data={comment}
           totalRating={course?.totalRatings}
           ratings={course?.userRatings}
         />

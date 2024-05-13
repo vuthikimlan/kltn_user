@@ -1,12 +1,11 @@
 "use client";
 import { Provider } from "react-redux";
 import { store } from "./store";
-import Header from "@/components/Header/Header";
 import { ConfigProvider } from "antd";
-import vinVN from "antd/locale/vi_VN";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import Footer from "@/components/Footer/Footer";
-function ProviderApp({
+import vinVN from "antd/locale/vi_VN";
+
+function ProviderPaymentSuccess({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -14,14 +13,12 @@ function ProviderApp({
   return (
     <>
       <Provider store={store}>
-        <Header />
         <ConfigProvider locale={vinVN}>
           <AntdRegistry>{children}</AntdRegistry>
         </ConfigProvider>
-        <Footer />
       </Provider>
     </>
   );
 }
 
-export default ProviderApp;
+export default ProviderPaymentSuccess;

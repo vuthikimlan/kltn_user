@@ -4,7 +4,8 @@ import { StarFilled, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Rate } from "antd";
 import { useDispatch } from "react-redux";
 import ModalComment from "../Modal/CommentAll";
-import { Key } from "react";
+import { Key, useEffect } from "react";
+import { getCommentByCourse } from "@/api/comment";
 
 function CommentCourse({ data, totalRating, ratings }: any) {
   const dispatch = useDispatch();
@@ -27,21 +28,43 @@ function CommentCourse({ data, totalRating, ratings }: any) {
       </div>
       {data?.map((el: any, ind: Key) => {
         return (
-          <div key={ind}>
+          <div key={ind} className=" mb-[30px] ">
             <div className="grid-cols-2 grid gap-8 ">
-              <div className="border-t-[1px] border-solid border-[#d1d7dc] py-[20px]">
-                <div className="flex mb-[10px] ">
-                  <Avatar size="large" icon={<UserOutlined />} />
-                  <div className="ml-[15px] text-sm ">
-                    <p className="font-bold ">{el?.postedBy?.name}</p>
-                    <span className="mr-[5px] ">
-                      {" "}
-                      <Rate disabled allowHalf defaultValue={el?.star} />{" "}
-                    </span>
-                    <span>{formatDate(`${el?.updatedAt}`)}</span>
+              <div>
+                <div className="border-t-[1px] border-solid border-[#d1d7dc] py-[20px]">
+                  <div className="flex mb-[10px] ">
+                    <Avatar size="large" icon={<UserOutlined />} />
+                    <div className="ml-[15px] text-sm ">
+                      <p className="font-bold ">{el?.postedBy?.name}</p>
+                      <span className="mr-[5px] ">
+                        {" "}
+                        <Rate disabled allowHalf defaultValue={el?.star} />{" "}
+                      </span>
+                      <span>{formatDate(`${el?.updatedAt}`)}</span>
+                    </div>
                   </div>
+                  <p>{el?.comment}</p>
                 </div>
-                <p>{el?.comment}</p>
+                {el?.reply ? (
+                  <>
+                    <div className="border-l-[5px] border-solid border-[#d1d7dc] px-[20px] ml-[30px] ">
+                      <div className="flex mb-[10px] ">
+                        <Avatar size="large" icon={<UserOutlined />} />
+                        <div className="ml-[15px] text-sm ">
+                          <p className="font-bold ">
+                            {el?.reply?.postedBy?.name}
+                          </p>
+                          <span className="mr-[5px] text-[#6A6F73] ">
+                            Phản hồi của giảng viên
+                          </span>
+                        </div>
+                      </div>
+                      <p>{el?.reply?.content}</p>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

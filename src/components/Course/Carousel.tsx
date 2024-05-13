@@ -43,7 +43,7 @@ function CarouselCourse({ dataCourse }: any) {
                           <p className="font-medium text-base mb-[2px] mt-[4px] ">
                             {item?.name}
                           </p>
-                          {item?.ratings.map((el: any, ind: Key) => {
+                          {/* {item?.ratings.map((el: any, ind: Key) => {
                             return (
                               <div key={ind}>
                                 <Rate
@@ -53,7 +53,7 @@ function CarouselCourse({ dataCourse }: any) {
                                 />{" "}
                               </div>
                             );
-                          })}
+                          })} */}
                           <p className="text-xs text-[#6a6f73] mb-[2px] ">
                             {item?.createdBy?.name}
                           </p>

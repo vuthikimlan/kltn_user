@@ -1,7 +1,7 @@
 "use client";
 import { getProfileUser } from "@/api/user";
 import { Table, TableProps } from "antd";
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 
 function OrderCancelled() {
   const [data, setData] = useState<any>();
@@ -25,18 +25,46 @@ function OrderCancelled() {
   }
 
   const columns: TableProps["columns"] = [
+    // {
+    //   dataIndex: "courses",
+    //   key: "courses",
+    //   render: (_, { courses }) => (
+    //     //   {
+    //     //   console.log(
+    //     //     "courses",
+    //     //     courses.map((course: any) => course.name)
+    //     //   );
+    //     //   return 1;
+    //     // }
+    //     <>{courses.map((course: any) => course.name)}</>
+    //   ),
+    // },
     {
-      dataIndex: "courses",
-      key: "courses",
-      render: (_, { courses }) => (
-        //   {
-        //   console.log(
-        //     "courses",
-        //     courses.map((course: any) => course.name)
-        //   );
-        //   return 1;
-        // }
-        <>{courses.map((course: any) => course.name)}</>
+      title: "Khóa học",
+      dataIndex: "price",
+      key: "price",
+      render: (_, { price }) => (
+        <>
+          {price.map((course: any, ind: Key) => (
+            <ul key={ind}>
+              <li>{course.name}</li>
+            </ul>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: "Chi phí",
+      dataIndex: "price",
+      key: "price",
+      render: (_, { price }) => (
+        <>
+          {price.map((course: any, ind: Key) => (
+            <ul key={ind}>
+              <li>{course.price.toLocaleString("en")} VND </li>
+            </ul>
+          ))}
+        </>
       ),
     },
     {

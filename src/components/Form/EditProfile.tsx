@@ -7,6 +7,7 @@ import { getProfileUser, updateProfile } from "@/api/user";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import ButtonUpload from "../Button/ButtonUpload";
 
 function EditProfile() {
   const route = useRouter();

@@ -4,10 +4,10 @@ import TabsComponent from "@/components/Tabs/Tabs";
 
 function PagePurchaseHistory() {
   return (
-    <div className="w-[70%] m-[auto] pt-[30px] ">
+    <div className="w-[70%] mx-[auto] pt-[30px] mb-[16rem] ">
       <h1 className="text-3xl font-bold font-serif">Lịch sử mua</h1>
       <TabsComponent
-        label1="Khóa học "
+        label1="Thành công "
         label2="Đã hủy"
         children1={<OrderCompleted />}
         children2={<OrderCancelled />}

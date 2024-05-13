@@ -27,8 +27,8 @@ function FormLogin() {
         if (checkRole === "STUDENT") {
           Cookies.set("jwt", res?.data?.data?.token);
           dispatch(countCart(res?.data?.data?.countCourseCart));
-          message.success("Đăng nhập thành công");
           route.push("/home");
+          message.success("Đăng nhập thành công");
         }
       } else if (res?.data?.success === false) {
         message.error(res?.data?.error?.message);

@@ -63,6 +63,26 @@ function ModalComment({ data, totalRating, ratings }: any) {
                       </div>
                       <p>{el?.comment}</p>
                     </div>
+                    {el?.reply ? (
+                      <>
+                        <div className="border-l-[5px] border-solid border-[#d1d7dc] px-[20px] ml-[30px] ">
+                          <div className="flex mb-[10px] ">
+                            <Avatar size="large" icon={<UserOutlined />} />
+                            <div className="ml-[15px] text-sm ">
+                              <p className="font-bold ">
+                                {el?.reply?.postedBy?.name}
+                              </p>
+                              <span className="mr-[5px] text-[#6A6F73] ">
+                                Phản hồi của giảng viên
+                              </span>
+                            </div>
+                          </div>
+                          <p>{el?.reply?.content}</p>
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 );
               })}

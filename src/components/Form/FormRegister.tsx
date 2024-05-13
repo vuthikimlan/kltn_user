@@ -21,7 +21,7 @@ function FormRegister() {
     register(values).then((res) => {
       if (res?.data?.success === true) {
         message.success("Đăng ký tài khoản thành công");
-        router.push("/");
+        router.push("/login");
       }
     });
   };

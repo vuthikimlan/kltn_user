@@ -3,10 +3,10 @@ import MenuBlog from "@/components/Menu/MenuBlog";
 
 function PageBlogByField() {
   return (
-    <>
+    <div className="mb-[12rem] ">
       <MenuBlog />
       <BlogByField />
-    </>
+    </div>
   );
 }
 
