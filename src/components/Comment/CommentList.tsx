@@ -23,7 +23,9 @@ function CommentList({ getcomment, courseId, totalRatings }: any) {
     });
   };
   useEffect(() => {
-    handleGetComment(courseId);
+    if (courseId) {
+      handleGetComment(courseId);
+    }
   }, [courseId]);
 
   const handleSearch = (e: any) => {

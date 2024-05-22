@@ -1,12 +1,24 @@
 import { CopyOutlined, YoutubeOutlined } from "@ant-design/icons";
-import { Collapse } from "antd";
+import { Checkbox, Collapse } from "antd";
 import { Key, useState } from "react";
+import type { CheckboxProps } from "antd";
+import { progressTracker } from "@/api/user";
 
 type ItemType = any;
 
-function ContentCourse({ data }: any) {
+function ContentCourse({
+  data,
+  completedLectures,
+  handleGetProgressUser,
+}: any) {
   const parts = data?.parts;
   const [video, setVideo] = useState("");
+  const [lectureId, setLectureId] = useState("");
+
+  const onChange: CheckboxProps["onChange"] = (e) => {
+    progressTracker(data?._id, lectureId, e.target.checked);
+    handleGetProgressUser();
+  };
 
   const genExtra = ({ count, totalTimeLectures }: any) => {
     return (
@@ -35,17 +47,36 @@ function ContentCourse({ data }: any) {
         label: `Phần ${i}: ${item?.partName} `,
         children: (
           <div key={ids}>
+            {" "}
             {item?.lectures?.map((el: any, ind: Key) => {
+              const isCompleted = completedLectures.find(
+                (items: any) =>
+                  items?.lectureId &&
+                  el?._id &&
+                  items.lectureId.toString() === el?._id.toString() &&
+                  items.completed === true
+              );
+
               return (
                 <div key={ind}>
                   <div className="flex justify-between">
-                    <div
-                      className="flex"
-                      onClick={() => handleGetSrcVideo(el?.video)}
-                    >
-                      <YoutubeOutlined className="mr-[8px]" />
-                      {el?.lectureName}
+                    <div className="flex ">
+                      <Checkbox
+                        defaultChecked={!!isCompleted}
+                        onChange={onChange}
+                      />
+                      <div
+                        className="flex"
+                        onClick={() => {
+                          handleGetSrcVideo(el?.video);
+                          setLectureId(el?._id);
+                        }}
+                      >
+                        {/* <YoutubeOutlined className="mr-[8px]" /> */}
+                        <p className="ml-[8px]">{el?.lectureName}</p>
+                      </div>
                     </div>
+
                     <span>{el?.duration}</span>
                   </div>
                   {el?.document && (
@@ -74,10 +105,8 @@ function ContentCourse({ data }: any) {
           width="1370"
           height="600"
           src={video}
-          // src="https://firebasestorage.googleapis.com/v0/b/nodejs-b9313.appspot.com/o/Demo_NodeJS%2F%E3%80%90Vietsub%2BLyrics%E3%80%91%20Until%20I%20Found%20You%20(Juliet%20to%20your%20Romeo)%20-%20Stephen%20Sanchez%20ft.%20Em%20Beihold.mp4?alt=media&token=e6c32857-d991-4dab-aa0f-5a9ed7be372d"
           frameBorder="0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          // autoplay;
           allowFullScreen
         ></iframe>
       </div>

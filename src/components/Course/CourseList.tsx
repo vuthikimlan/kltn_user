@@ -10,10 +10,10 @@ function CourseList({ dataCourse }: any) {
   const total = dataCourse.length;
 
   return (
-    <div className="flex justify-around ">
-      <div className="w-[20rem] mt-[20px] ">
+    <div className=" mx-[15%]  justify-around ">
+      <div className="w-[50rem] mt-[20px] ">
         <ButtonSearch />
-        <ProForm layout="vertical">
+        {/* <ProForm layout="vertical">
           <ProFormSelect
             name="select1"
             label="Thể loại"
@@ -36,7 +36,7 @@ function CourseList({ dataCourse }: any) {
             ]}
             placeholder="Please select a country"
           />
-        </ProForm>
+        </ProForm> */}
       </div>
       <div>
         {dataCourse.map((items: any, ind: any) => {

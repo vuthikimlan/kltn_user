@@ -65,20 +65,6 @@ export const getProfileUser = () => {
   return axios.get("/profile/user");
 };
 
-// export const getProfileUser = async () => {
-//     const res = await fetch('http://localhost:8000/profile/user',{
-//         headers: {
-//             'Authorization': `Bearer ${token}`
-//           }
-//     })
-//     if(!res.ok) {
-//         throw new Error('Failed to fetch data')
-//     }
-
-//     const data = await res.json()
-//     return data
-// }
-
 export const updateProfile = (values) => {
   return axios.put("/profile/updated-profile", values);
 };
@@ -96,4 +82,15 @@ export const resetPasword = async (token, values) => {
 
 export const forgotPasword = async (values) => {
   return axios.post(`/password/forgot`, values);
+};
+
+export const progressTracker = async (courseId, lectureId, values) => {
+  const data = {
+    completed: values,
+  };
+  return axios.put(`/user/progress/${courseId}/${lectureId}`, data);
+};
+
+export const getProgressUser = async (courseId) => {
+  return axios.get(`/user/progress-user/${courseId}`);
 };

@@ -26,6 +26,7 @@ function FormLogin() {
         const checkRole = res?.data?.data?.role;
         if (checkRole === "STUDENT") {
           Cookies.set("jwt", res?.data?.data?.token);
+          Cookies.set("idUser", res?.data?.data?._id);
           dispatch(countCart(res?.data?.data?.countCourseCart));
           route.push("/home");
           message.success("Đăng nhập thành công");

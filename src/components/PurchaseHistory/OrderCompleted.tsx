@@ -1,6 +1,6 @@
 "use client";
 import { getProfileUser } from "@/api/user";
-import { Table, TableProps } from "antd";
+import { Skeleton, Table, TableProps } from "antd";
 import { Key, useEffect, useState } from "react";
 
 function OrderCompleted() {
@@ -11,9 +11,18 @@ function OrderCompleted() {
       setData(res?.data?.data?.order);
     });
   };
+
   useEffect(() => {
     handleGetProfile();
   }, []);
+
+  if (!data) {
+    return (
+      <div>
+        <Skeleton active />
+      </div>
+    );
+  }
 
   const orderCompleted = data?.filter(
     (order: any) => order.status === "completed"

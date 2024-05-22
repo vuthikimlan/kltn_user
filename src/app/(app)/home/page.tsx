@@ -1,4 +1,4 @@
-import Banner from "@/components/Banner/Banner";
+import JoiningCourse from "@/components/Course/JoiningCourse";
 import TopCourse from "@/components/Course/TopCourse";
 import MenuCategory from "@/components/Menu/MenuCategory";
 
@@ -7,7 +7,7 @@ function Home() {
     <>
       <MenuCategory />
       <div className="mx-[10%]">
-        <Banner />
+        <JoiningCourse />
         <TopCourse />
       </div>
     </>

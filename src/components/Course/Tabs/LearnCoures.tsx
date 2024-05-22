@@ -6,33 +6,36 @@ import ContentCourse from "../Collapse/ContentCourse";
 import { useParams } from "next/navigation";
 import { getCourseBySlug } from "@/api/course";
 import TabsComponent from "@/components/Tabs/Tabs";
-import { Skeleton } from "antd";
+import { Progress, Skeleton } from "antd";
 import { useEffect, useState } from "react";
-import { getCommentByCourse } from "@/api/comment";
+import { getProgressUser } from "@/api/user";
 
 function LearningCourse() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
   const [data, setData] = useState<any>({});
-  const [comment, setComment] = useState<any>({});
+  const [percentProgress, setPercentProgress] = useState<any>({});
+  const [completed, setCompleted] = useState<any>([]);
 
   const handleGetSlug = async () => {
     await getCourseBySlug(slug).then((res) => {
       setData(res?.data);
     });
   };
-
   const courseId = data?._id;
 
-  // const handleGetComment = (courseId: any) => {
-  //   getCommentByCourse(courseId).then((res) => {
-  //     setComment(res?.data?.comments);
-  //   });
-  // };
+  const handleGetProgressUser = async () => {
+    getProgressUser(courseId).then((res) => {
+      setPercentProgress(res?.data?.data?.progressPercentage);
+      setCompleted(res?.data?.data?.completedLectures);
+    });
+  };
 
   useEffect(() => {
     handleGetSlug();
-    // handleGetComment(courseId);
+    if (courseId) {
+      handleGetProgressUser();
+    }
   }, [courseId]);
 
   if (!data) {
@@ -44,12 +47,22 @@ function LearningCourse() {
   }
   return (
     <>
-      <div className=" border-[1px] boder-solid border-[#2d2f31] bg-[#2d2f31] text-[#fff] p-[20px] ">
-        <h1 className="w-[30%] m-[auto] ">{data?.name}</h1>
+      <div className=" border-[1px] boder-solid border-[#f0f0f0] bg-[#f0f0f0] text-[#fff] p-[20px] flex justify-around items-center">
+        <h1 className="w-[30%] ml-[30px] mt-[10px] text-slate-500 ">
+          {data?.name}
+        </h1>
+        <div className="flex items-center ">
+          <p className="text-slate-500 mr-[10px] ">Tiến độ của bạn</p>
+          <Progress type="circle" percent={percentProgress} size={50} />
+        </div>
       </div>
       <div>
         <div className=" cursor-pointer ">
-          <ContentCourse data={data} />
+          <ContentCourse
+            data={data}
+            completedLectures={completed}
+            handleGetProgressUser={handleGetProgressUser}
+          />
         </div>
         <div className="ml-[20px] w-[75%] ">
           <TabsComponent
@@ -58,12 +71,10 @@ function LearningCourse() {
             children1={<IntroduceCourse course={data} />}
             children2={
               <CommentList
-                // comment={comment}
                 courseId={courseId}
                 totalRatings={data?.totalRatings}
-                // getcomment={handleGetComment}
               />
-            } //getcomment={handleGetSlug}
+            }
           />
         </div>
       </div>

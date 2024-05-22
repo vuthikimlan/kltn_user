@@ -21,66 +21,58 @@ function CarouselCourse({ dataCourse }: any) {
       >
         <Row gutter={[0, 6]}>
           {dataCourse.map((item: any, ind: Key | null | undefined) => (
-            // console.log("item", item)
             <SwiperSlide key={ind}>
-              <div className="flex ">
-                <Col>
-                  <Popover
-                    content={<ContentPopover items={item} />}
-                    placement="right"
-                    className="text-[#101112] "
-                  >
-                    <Link href={`http://localhost:3000/course/${item.slug}`}>
-                      <div className="mr-[20px]">
-                        <div>
-                          <img
-                            src={item?.image}
-                            alt=""
-                            className=" w-[240px] h-[135px] "
-                          />
-                        </div>
-                        <div className="w-[100%] ">
-                          <p className="font-medium text-base mb-[2px] mt-[4px] ">
-                            {item?.name}
-                          </p>
-                          {/* {item?.ratings.map((el: any, ind: Key) => {
-                            return (
-                              <div key={ind}>
-                                <Rate
-                                  disabled
-                                  allowHalf
-                                  defaultValue={el?.star}
-                                />{" "}
-                              </div>
-                            );
-                          })} */}
-                          <p className="text-xs text-[#6a6f73] mb-[2px] ">
-                            {item?.createdBy?.name}
-                          </p>
-                          {item.discountedPrice > 0 ? (
-                            <>
-                              <div className=" flex">
+              {item.isApprove && (
+                <div className="flex ">
+                  <Col>
+                    <Popover
+                      content={<ContentPopover items={item} />}
+                      placement="right"
+                      className="text-[#101112] "
+                    >
+                      <Link href={`http://localhost:3000/course/${item.slug}`}>
+                        <div className="mr-[20px]">
+                          <div>
+                            <img
+                              src={item?.image}
+                              alt=""
+                              className=" w-[240px] h-[135px] "
+                            />
+                          </div>
+                          <div className="w-[100%] ">
+                            <p className="font-medium text-base mb-[2px] mt-[4px] ">
+                              {item?.name}
+                            </p>
+
+                            <p className="text-xs text-[#6a6f73] mb-[2px] ">
+                              {item?.createdBy?.name}
+                            </p>
+                            {item.discountedPrice > 0 ? (
+                              <>
+                                <div className=" flex">
+                                  <p className="font-medium text-base ">
+                                    ₫{" "}
+                                    {item.discountedPrice.toLocaleString("en")}{" "}
+                                  </p>
+                                  <p className="font-normal text-base text-[#6a6f73] ml-[10px] line-through ">
+                                    ₫ {item.price.toLocaleString("en")}{" "}
+                                  </p>
+                                </div>
+                              </>
+                            ) : (
+                              <>
                                 <p className="font-medium text-base ">
-                                  ₫ {item.discountedPrice.toLocaleString("en")}{" "}
-                                </p>
-                                <p className="font-normal text-base text-[#6a6f73] ml-[10px] line-through ">
                                   ₫ {item.price.toLocaleString("en")}{" "}
                                 </p>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <p className="font-medium text-base ">
-                                ₫ {item.price.toLocaleString("en")}{" "}
-                              </p>
-                            </>
-                          )}
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </Popover>
-                </Col>
-              </div>
+                      </Link>
+                    </Popover>
+                  </Col>
+                </div>
+              )}
             </SwiperSlide>
           ))}
         </Row>
