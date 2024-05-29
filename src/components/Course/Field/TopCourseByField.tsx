@@ -24,9 +24,14 @@ async function TopCourseByField({ slug }: any) {
       return el;
     });
   });
+
+  const approvedCourse = course.filter((el: any) => {
+    return el.isApprove;
+  });
+
   return (
     <>
-      <CarouselCourse dataCourse={course} />
+      <CarouselCourse dataCourse={approvedCourse} />
     </>
   );
 }

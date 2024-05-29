@@ -4,15 +4,21 @@
 
 import { getBlogBySlug } from "@/api/blog";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-async function BlogBySlug() {
+function BlogBySlug() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
-  const res = await getBlogBySlug(slug);
-  let blog: any = {};
-  if (res) {
-    blog = res?.data;
-  }
+  const [blog, setBlog] = useState<any>(null);
+  const handleGetBlogBySlug = () => {
+    getBlogBySlug(slug).then((res: any) => {
+      setBlog(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetBlogBySlug();
+  }, []);
 
   return (
     <div>

@@ -14,17 +14,15 @@ function CourseByTopic() {
   const slugField = params.slug;
   const slugTopic = params.slugTopic;
 
-  // const res = await getTopicBySlug(slugField, slugTopic);
-  // let data: any = {};
-  // if (res) {
-  //   data = res?.data;
-  // }
-
   const handleGetTopicBySlug = () => {
     getTopicBySlug(slugField, slugTopic).then((res: any) => {
       setData(res?.data);
     });
   };
+
+  const approvedCourse = data?.courses?.filter((el: any) => {
+    return el.isApprove;
+  });
 
   useEffect(() => {
     handleGetTopicBySlug();
@@ -48,14 +46,14 @@ function CourseByTopic() {
           <TabsComponent
             label1="Thịnh hành"
             label2="Mới"
-            children1={<CarouselCourse dataCourse={data?.courses} />}
-            children2={<CarouselCourse dataCourse={data?.courses} />}
+            children1={<CarouselCourse dataCourse={approvedCourse} />}
+            children2={<CarouselCourse dataCourse={approvedCourse} />}
           />
           <h1 className="text-[#2d2f31] text-2xl font-semibold my-[20px] ">
             {`Tất cả các khóa học ${data?.nameTopic} `}
           </h1>
           <div>
-            <CourseList dataCourse={data?.courses} />
+            <CourseList dataCourse={approvedCourse} />
           </div>
         </div>
       )}

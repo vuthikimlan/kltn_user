@@ -27,14 +27,16 @@ function BlogByField() {
     );
   }
 
-  //   console.log("blog", blog);
-
   return (
-    <div className=" w-[80rem] my-[20px] mx-[auto] mt-[10rem] ">
+    <div className=" w-[80rem] my-[20px] mx-[auto] mt-[7rem] flex ">
       {data.map((el: any, ind: Key) => (
-        <Link href={`/blog/detail/${el?.slug}`} key={ind}>
+        <Link
+          href={`/blog/detail/${el?.slug}`}
+          key={ind}
+          className=" text-[#1677ff] "
+        >
           <div className="flex  ">
-            <div className=" border-r-[1px] border-solid border-[#d1d7dc] mr-[24px] w-[28rem] pr-[15px] ">
+            <div className=" border-r-[1px] border-solid border-[#d1d7dc] mr-[24px] w-[22rem] pr-[15px] ">
               <h1 className="text-2xl font-semibold font-mono mb-[10px] w-[20rem] ">
                 {el?.name}
               </h1>

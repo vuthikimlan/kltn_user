@@ -11,6 +11,17 @@ export const getAllCourse = async (params) => {
   return data;
 };
 
+export const getAllCourseAprrove = async (params) => {
+  const response = await fetch("http://localhost:8000/approve/approved", {
+    next: { revalidate: 0 },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  const data = await response.json();
+  return data;
+};
+
 // export const getAllCourse = async (params) => {
 //   const response = await fetch('http://localhost:3000/api/cache?path=course/getAll');
 //   if (!response.ok) {

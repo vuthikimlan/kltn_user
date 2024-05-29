@@ -43,6 +43,10 @@ function CourseByField() {
     });
   });
 
+  const approvedCourse = course.filter((el: any) => {
+    return el.isApprove;
+  });
+
   return (
     <>
       <div className="border-t-[1px] border-solid border-[#d1d7dc] shadow-md">
@@ -60,8 +64,8 @@ function CourseByField() {
         <TabsComponent
           label1="Thịnh hành"
           label2="Mới"
-          children1={<CarouselCourse dataCourse={course} />}
-          children2={<CarouselCourse dataCourse={course} />}
+          children1={<CarouselCourse dataCourse={approvedCourse} />}
+          children2={<CarouselCourse dataCourse={approvedCourse} />}
         />
 
         <h1 className="text-[#2d2f31] text-2xl font-semibold mb-[16px] mt-[30px] ">
@@ -81,7 +85,7 @@ function CourseByField() {
           {`Tất cả các khóa học ${field?.title} `}
         </h1>
         <div>
-          <CourseList dataCourse={course} />
+          <CourseList dataCourse={approvedCourse} />
         </div>
       </div>
     </>
