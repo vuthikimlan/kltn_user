@@ -14,11 +14,11 @@ function JoiningCourse() {
     });
   }, []);
   return (
-    <div className="mt-[50px] mx-[10%]">
-      <h1 className="text-3xl text-[#2d2f31] font-serif font-semibold ">
+    <div className="mt-[50px] mx-[5%]">
+      <h1 className="text-3xl text-[#2d2f31] text-center font-serif font-semibold mb-[10px] ">
         {name} ơi, hãy bắt đầu học nào
       </h1>
-      <div className=" flex ">
+      <div className=" grid grid-cols-3 gap-x-[10rem] gap-y-4 ">
         {myCourse.map((items: any, ind: Key) => {
           return (
             <div key={ind}>

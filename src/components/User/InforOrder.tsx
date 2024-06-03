@@ -2,12 +2,10 @@
 "use client";
 
 import { getOrder } from "@/api/user";
-import { RootState } from "@/store/store";
 import { Skeleton } from "antd";
 import { Key, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PaymentWithVNPAY from "../Button/PaymentVNPAY";
-import PaymentWithMOMO from "../Button/PaymentMomo";
 import CancelPayment from "../Button/CancelPayment";
 
 function InforOrder() {
@@ -34,10 +32,6 @@ function InforOrder() {
       </div>
     );
   }
-
-  // console.log("inforOrder", inforOrder);
-  // console.log("orderId", orderId);
-  // console.log("order", orderId);
 
   const course = order?.courses;
 
@@ -93,7 +87,6 @@ function InforOrder() {
         </h1>
         <div className="flex ">
           <PaymentWithVNPAY amount={order?.totalPrice} orderId={orderId} />
-          <PaymentWithMOMO amount={order?.totalPrice} orderId={orderId} />
         </div>
         <div className=" relative top-[2rem] left-[8rem] ">
           <CancelPayment orderId={orderId} />

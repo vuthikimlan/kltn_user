@@ -109,7 +109,9 @@ function DetaileCourse() {
           </div>
           <div className="mb-[25px] descriptionCourse ">
             <h1 className=" text-xl font-semibold mb-[16px] ">Mô tả</h1>
-            <p>{course?.detailsCourse}</p>
+            <div
+              dangerouslySetInnerHTML={{ __html: course?.detailsCourse }}
+            ></div>
           </div>
           <div className="mb-[25px] objectCourse ">
             <h1 className=" text-xl font-semibold mb-[16px] ">

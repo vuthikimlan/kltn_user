@@ -31,7 +31,6 @@ function Footer() {
             Phương thức thanh toán
           </h1>
           <div className="flex">
-            <Image src={momo} alt={""} width={50} className="mr-[20px] " />
             <Image src={vnpay} alt={""} width={50} />
           </div>
         </div>

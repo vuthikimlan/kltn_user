@@ -21,28 +21,16 @@ function ButtonAddCart({ courseId }: any) {
           message: "Thêm khóa học vào giỏ hàng thành công",
         });
       } else if (res.status === 201) {
-        notification.success({
+        notification.info({
           message: "Khóa học đã tồn tại trong giỏ hàng",
+        });
+      } else if (res.status === 202) {
+        notification.info({
+          message: "Khóa học đã được mua. Vui lòng xem trong khóa học của bạn",
         });
       }
     });
   };
-  // const handleAddCartAnonymous = () => {
-  //   addCartAnonymous(courseId).then((res) => {
-  //     if (res.status === 200) {
-  //       // const count = res?.data?.data?.countCourse;
-  //       // Cookies.set("cartCount", count);
-  //       // dispatch(countCart(count));
-  //       notification.success({
-  //         message: "Thêm khóa học vào giỏ hàng thành công",
-  //       });
-  //     } else if (res.status === 201) {
-  //       notification.success({
-  //         message: "Khóa học đã tồn tại trong giỏ hàng",
-  //       });
-  //     }
-  //   });
-  // };
 
   return (
     <>
