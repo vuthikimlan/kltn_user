@@ -1,14 +1,14 @@
 import { Tabs } from "antd";
 import { TabsProps } from "antd/lib";
 
-interface DataType {
-  label1: string;
-  label2: string;
-  children1: any;
-  children2: any;
-}
-
-function TabsComponent({ label1, label2, children1, children2 }: DataType) {
+function TabsComponent({
+  label1,
+  label2,
+  label3,
+  children1,
+  children2,
+  children3,
+}: any) {
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -19,6 +19,11 @@ function TabsComponent({ label1, label2, children1, children2 }: DataType) {
       key: "2",
       label: `${label2} `,
       children: children2,
+    },
+    {
+      key: "3",
+      label: `${label3} `,
+      children: children3,
     },
   ];
   return (

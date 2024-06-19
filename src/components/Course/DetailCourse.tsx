@@ -6,13 +6,15 @@ import { useParams } from "next/navigation";
 import { getCourseBySlug } from "@/api/course";
 import { CheckOutlined } from "@ant-design/icons";
 import { Rate, Skeleton } from "antd";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getCommentByCourse } from "@/api/comment";
+import { getUserById } from "@/api/user";
 
 function DetaileCourse() {
   const params = useParams<{ slug: string }>();
   const [course, setCourse] = useState<any>({});
   const [comment, setComment] = useState<any>();
+  const [user, setUser] = useState<any>();
   const slug = params.slug;
 
   const handleGetCourseBySlug = async () => {
@@ -26,13 +28,22 @@ function DetaileCourse() {
     });
   };
 
+  const handleGetUser = () => {
+    getUserById(course?.createdBy?._id).then((res) => {
+      setUser(res?.data?.data);
+    });
+  };
+
   useEffect(() => {
     handleGetCourseBySlug();
     handleGetComment(courseId);
+    handleGetUser();
   }, [courseId]);
 
   const users = course?.users?.length;
   const parts = course?.parts?.length;
+
+  console.log("user", user);
 
   if (!course || !comment) {
     return (
@@ -59,11 +70,6 @@ function DetaileCourse() {
             <p className="font-sans mt-[10px] ">{`Được tạo bởi ${course?.createdBy?.name} `}</p>
           </div>
         </div>
-
-        {/* <img
-          src="https://img-c.udemycdn.com/course/240x135/5391834_7008_2.jpg"
-          className="absolute"
-        /> */}
       </div>
       <div className="w-[50%] m-[auto] ">
         <div className="pt-[24px] mb-[32px]  ">
@@ -126,6 +132,16 @@ function DetaileCourse() {
                   </div>
                 );
               })}
+            </ul>
+          </div>
+          <div className="mb-[20px] ">
+            <h1 className=" text-xl font-semibold mb-[16px] ">Giảng viên</h1>
+            <ul className="list-disc ml-[20px] ">
+              <li>{user?.name}</li>
+              <li>{user?.email}</li>
+
+              <li>{user?.teacher?.experience}</li>
+              <li>{user?.teacher?.specialization}</li>
             </ul>
           </div>
           <div className="w-[35%] m-[auto] ">

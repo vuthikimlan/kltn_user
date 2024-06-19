@@ -5,6 +5,7 @@ import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { ProFormSelect } from "@ant-design/pro-components";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface DataType {
   name: string;
@@ -16,15 +17,29 @@ interface DataType {
 
 function FormRegister() {
   const router = useRouter();
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onFinish = (values: DataType) => {
+    if (values.password !== confirmPassword) {
+      message.error("Mật khẩu và mật khẩu xác nhận không khớp");
+      return;
+    }
     register(values).then((res) => {
       if (res?.data?.success === true) {
         message.success("Đăng ký tài khoản thành công");
         router.push("/login");
+      } else if (res?.data?.error?.statusCode === 2) {
+        res?.data?.error?.errorList.map((e: any) => {
+          return message.open({
+            type: "error",
+            content: e.msg,
+            duration: 8,
+          });
+        });
       }
     });
   };
+
   return (
     <div className="w-[28%] m-[auto] p-[30px] border-solid border-[1px]  shadow-xl mt-[7rem]">
       <h1 className="text-lg font-semibold mb-[20px] w-[70%] m-[auto] text-center ">
@@ -64,23 +79,6 @@ function FormRegister() {
           />
         </Form.Item>
         <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Mật khẩu phải tối thiểu 6 - 20 ký tự ",
-            },
-          ]}
-        >
-          <Input.Password
-            className="input w-[74%] "
-            prefix={<LockOutlined />}
-            type="Mật khẩu"
-            placeholder="Mật khẩu"
-            size="large"
-          />
-        </Form.Item>
-        <Form.Item
           name="email"
           rules={[
             {
@@ -98,6 +96,42 @@ function FormRegister() {
             className="input w-[74%] "
             prefix={<MailOutlined className="site-form-item-icon mr-5" />}
             placeholder="Email"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Mật khẩu phải tối thiểu 6 - 20 ký tự ",
+            },
+          ]}
+        >
+          <Input.Password
+            className="input w-[74%] "
+            prefix={<LockOutlined />}
+            type="Mật khẩu"
+            placeholder="Mật khẩu"
+            size="large"
+          />
+        </Form.Item>
+        <Form.Item
+          name="confirmPassword"
+          rules={[
+            {
+              required: true,
+              message: "Mật khẩu phải tối thiểu 6 - 20 ký tự ",
+            },
+          ]}
+        >
+          <Input.Password
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="input w-[74%] "
+            prefix={<LockOutlined />}
+            type="Xác nhận mật khẩu"
+            placeholder="Xác nhận mật khẩu"
+            size="large"
           />
         </Form.Item>
         <h1 className="text-lg font-semibold mb-[10px] ">

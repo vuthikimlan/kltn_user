@@ -18,7 +18,7 @@ function ForgetPassword() {
     });
   };
   return (
-    <div className="w-[28%] m-[auto] p-[30px] border-solid border-[1px]  shadow-xl mt-[7rem] ">
+    <div className="w-[28%] mx-[auto] p-[30px] border-solid border-[1px]  shadow-xl mt-[7rem] mb-[12%] ">
       <h1 className=" text-2xl font-semibold text-center mb-[10px] ">
         Đặt lại mật khẩu
       </h1>
@@ -45,6 +45,13 @@ function ForgetPassword() {
             className=" bg-[#fff] border-[#4096ff] text-xl rounded-none text-white font-semibold w-[100%] "
           >
             Đồng ý
+          </Button>
+          <Button
+            type="link"
+            className="button w-[100%]  "
+            onClick={() => route.push("/")}
+          >
+            Đăng nhập
           </Button>
         </Form.Item>
       </Form>

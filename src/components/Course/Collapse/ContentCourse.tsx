@@ -1,6 +1,6 @@
 import { CopyOutlined, YoutubeOutlined } from "@ant-design/icons";
-import { Checkbox, Collapse } from "antd";
-import { Key, useState } from "react";
+import { Checkbox, Collapse, Skeleton } from "antd";
+import { Key, useEffect, useState } from "react";
 import type { CheckboxProps } from "antd";
 import { progressTracker } from "@/api/user";
 
@@ -12,8 +12,14 @@ function ContentCourse({
   handleGetProgressUser,
 }: any) {
   const parts = data?.parts;
-  const [video, setVideo] = useState("");
   const [lectureId, setLectureId] = useState("");
+  const [video, setVideo] = useState();
+
+  useEffect(() => {
+    if (parts) {
+      setVideo(parts[0].lectures[0].video || "");
+    }
+  }, [parts]);
 
   const onChange: CheckboxProps["onChange"] = (e) => {
     progressTracker(data?._id, lectureId, e.target.checked);
@@ -33,7 +39,7 @@ function ContentCourse({
     );
   };
 
-  const handleGetSrcVideo = (src: string) => {
+  const handleGetSrcVideo = (src: any) => {
     setVideo(src);
   };
 

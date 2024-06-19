@@ -1,7 +1,7 @@
 "use client";
 import { getVpayIpn } from "@/api/user";
 import { countCart } from "@/store/appSlice";
-import { Button, Result } from "antd";
+import { Button, Result, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
@@ -18,13 +18,14 @@ function PaymentSuccess(params: any) {
   const handleIPN = () => {
     getVpayIpn(paramsString).then((res) => console.log(res));
     router.push("/home");
+    message.info("Vui lòng kiểm tra email để kích hoạt khóa học");
   };
   return (
     <div className="mt-[50px]">
       <Result
         status="success"
-        title="Khóa học của bạn đã được  thanh toán thành công"
-        subTitle="Cảm ơn bạn đã tin tưởng và lựa chọn dịch vụ của chúng tôi. Khóa học của bạn đã được kích hoạt, bạn có thể bắt đầu học ngay bây giờ."
+        title="Khóa học của bạn đã được thanh toán thành công"
+        subTitle="Cảm ơn bạn đã tin tưởng và lựa chọn dịch vụ của chúng tôi. Vui lòng vào email để kích hoạt khóa học"
         extra={[
           <Button
             key="redirec"

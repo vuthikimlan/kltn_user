@@ -30,14 +30,14 @@ function IntroduceCourse({ course }: any) {
             <p>Video: {course?.totalTimeCourse} phút</p>
           </div>
         </div>
-        <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex justify-between p-[20px] ">
-          <p>Mô tả</p>
-          <div>
-            <p className="w-[43rem] ">{course?.detailsCourse}</p>
-          </div>
+        <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex  p-[20px] ">
+          <p className="mr-[5rem] w-[4%] ">Mô tả</p>
+          <div
+            dangerouslySetInnerHTML={{ __html: course?.detailsCourse }}
+          ></div>
         </div>
-        <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex justify-between p-[20px] ">
-          <p>Giảng viên</p>
+        <div className="mt-[20px] border-t-[1px] border-solid border-[#e4e8eb] flex  p-[20px] ">
+          <p className="mr-[10rem] ">Giảng viên</p>
           <div>
             <Avatar></Avatar>
             <div>

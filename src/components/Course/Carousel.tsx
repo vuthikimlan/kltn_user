@@ -36,7 +36,7 @@ function CarouselCourse({ dataCourse }: any) {
                             <img
                               src={item?.image}
                               alt=""
-                              className=" w-[240px] h-[135px] "
+                              className=" w-[240px] h-[135px]   "
                             />
                           </div>
                           <div className="w-[100%] ">

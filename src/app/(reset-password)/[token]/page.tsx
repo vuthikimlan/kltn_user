@@ -17,7 +17,7 @@ function PageResetPassword() {
         Cookies.remove("jwt");
         route.push("/");
       } else {
-        message.error("Đặt lạ mật khẩu thất bại:");
+        message.error("Đặt lại mật khẩu thất bại:");
       }
     });
   };
@@ -65,7 +65,7 @@ function PageResetPassword() {
           <Button
             type="primary"
             htmlType="submit"
-            className=" bg-[#fff] border-[#4096ff] text-[#4096ff] text-xl rounded-none text-white font-semibold w-[100%] "
+            className=" bg-[#fff] border-[#4096ff] text-[#4096ff] text-xl rounded-none  font-semibold w-[100%] "
           >
             Xác nhận mật khẩu
           </Button>

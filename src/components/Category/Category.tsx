@@ -21,9 +21,7 @@ async function Category() {
                   className="hover:scale-[1.2] transition-transform duration-[0.3] ease-in-out "
                 />
               </div>
-              <p className=" text-center font-semibold mt-[5px] ">
-                {item.title}
-              </p>
+              <p className=" ml-[32%] font-semibold mt-[5px] ">{item.title}</p>
             </div>
           </Link>
         </div>

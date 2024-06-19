@@ -65,6 +65,10 @@ export const getProfileUser = () => {
   return axios.get("/profile/user");
 };
 
+export const getUserById = (id) => {
+  return axios.get(`/user/${id}`);
+};
+
 export const updateProfile = (values) => {
   return axios.put("/profile/updated-profile", values);
 };

@@ -13,30 +13,6 @@ function CourseList({ dataCourse }: any) {
     <div className=" mx-[15%]  justify-around ">
       <div className="w-[50rem] mt-[20px] ">
         <ButtonSearch />
-        {/* <ProForm layout="vertical">
-          <ProFormSelect
-            name="select1"
-            label="Thể loại"
-            request={async () => [
-              { label: "all", value: "all" },
-              { label: "Unresolved", value: "open" },
-              { label: "Resolved", value: "closed" },
-              { label: "Resolving", value: "processing" },
-            ]}
-            placeholder="Please select a country"
-          />
-          <ProFormSelect
-            name="select2"
-            label="Chủ đề"
-            request={async () => [
-              { label: "all", value: "all" },
-              { label: "Unresolved", value: "open" },
-              { label: "Resolved", value: "closed" },
-              { label: "Resolving", value: "processing" },
-            ]}
-            placeholder="Please select a country"
-          />
-        </ProForm> */}
       </div>
       <div>
         {dataCourse.map((items: any, ind: any) => {

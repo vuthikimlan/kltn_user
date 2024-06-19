@@ -9,6 +9,7 @@ import TabsComponent from "@/components/Tabs/Tabs";
 import { Progress, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { getProgressUser } from "@/api/user";
+import AssignmentList from "../Assignments/AssignmentList";
 
 function LearningCourse() {
   const params = useParams<{ slug: string }>();
@@ -68,6 +69,7 @@ function LearningCourse() {
           <TabsComponent
             label1="Tổng quan"
             label2="Đánh giá"
+            label3="Bài tập"
             children1={<IntroduceCourse course={data} />}
             children2={
               <CommentList
@@ -75,6 +77,7 @@ function LearningCourse() {
                 totalRatings={data?.totalRatings}
               />
             }
+            children3={<AssignmentList courseId={courseId} />}
           />
         </div>
       </div>
